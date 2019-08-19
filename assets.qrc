@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/">
+        <file>assets/videos/I-saw-with-my-own-eyes.mp4</file>
+        <file>assets/videos/Just-a-100fps-eyecandy.mp4</file>
+        <file>assets/fonts/Nickainley-Normal.ttf</file>
+        <file>assets/icons/x24/menu.png</file>
+        <file>assets/icons/x32/pause.png</file>
+        <file>assets/icons/x32/play.png</file>
+        <file>assets/icons/x48/create_new_folder.png</file>
+        <file>assets/icons/x48/folder.png</file>
+        <file>assets/icons/x48/fullscreen.png</file>
+        <file>assets/icons/x48/fullscreen_exit.png</file>
+        <file>assets/icons/x48/home.png</file>
+        <file>assets/icons/x48/video_call.png</file>
+        <file>assets/icons/x48/volume_0.png</file>
+        <file>assets/icons/x48/volume_1.png</file>
+        <file>assets/icons/x48/volume_2.png</file>
+        <file>assets/icons/x48/volume_mute.png</file>
+        <file>assets/icons/x48/settings.png</file>
+        <file>assets/icons/x48/video.png</file>
+        <file>assets/fonts/OpenSans-Light.ttf</file>
+        <file>assets/fonts/OpenSans-CondLight.ttf</file>
+        <file>assets/fonts/Mohave-Light.otf</file>
+        <file>assets/fonts/OpenSans-Regular.ttf</file>
+    </qresource>
+</RCC>

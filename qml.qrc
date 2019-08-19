@@ -1,0 +1,40 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>qml/MainContent.qml</file>
+        <file>qml/Prototypes/Prototype.qml</file>
+        <file>qml/Views/Playback.qml</file>
+        <file>qml/Views/Navigation.qml</file>
+        <file>qml/Components/Shared/MenuButton.qml</file>
+        <file>qml/Constants/Constants.qml</file>
+        <file>qml/Constants/Colors.qml</file>
+        <file>qml/Prototypes/VSlider.qml</file>
+        <file>qml/Controllers/MainController.qml</file>
+        <file>qml/Components/Playback/PlayButton.qml</file>
+        <file>qml/Components/Playback/VolumeButton.qml</file>
+        <file>qml/Components/Playback/Seekbar.qml</file>
+        <file>qml/Components/Playback/FullscreenButton.qml</file>
+        <file>qml/Components/Controls/ImageButton.qml</file>
+        <file>qml/Prototypes/VideoPlayer.qml</file>
+        <file>qml/Prototypes/ThumbnailGeneration.qml</file>
+        <file>qml/Views/Home.qml</file>
+        <file>qml/Views/Navbar.qml</file>
+        <file>qml/Views/Library.qml</file>
+        <file>qml/Components/Basic/View.qml</file>
+        <file>qml/Components/Basic/Image.qml</file>
+        <file>qml/Components/Basic/Textfield.qml</file>
+        <file>qml/Controllers/FileDialogController.qml</file>
+        <file>qml/Views/Settings.qml</file>
+        <file>qml/Components/Controls/Switch.qml</file>
+        <file>qml/Components/Shared/Logo.qml</file>
+        <file>qml/Components/Library/PathsDelegate.qml</file>
+        <file>qml/Controllers/DatabaseController.qml</file>
+        <file>qml/Controllers/LibraryController.qml</file>
+        <file>qml/Console/Console.qml</file>
+        <file>qml/Console/Customisable.qml</file>
+        <file>qml/Console/Operations.qml</file>
+        <file>qml/Console/Textual.qml</file>
+        <file>qml/Components/Library/ThumbnailGenerator.qml</file>
+        <file>qml/Components/Home/VideoDelegate.qml</file>
+    </qresource>
+</RCC>
