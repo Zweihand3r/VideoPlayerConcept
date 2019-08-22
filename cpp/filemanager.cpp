@@ -23,6 +23,33 @@ void FileManager::deleteDirectory(const QString path)
     }
 }
 
+QStringList FileManager::getFilePathsInDirectory(const QString path, const QStringList filters)
+{
+    QStringList paths = {};
+
+    QStringList currentIterPaths = { path };
+    QStringList nextIterPaths = {};
+
+    while (currentIterPaths.length() > 0) {
+        for (QString iterPath : currentIterPaths) {
+            QDir dir(iterPath);
+            QFileInfoList iterResults = dir.entryInfoList(filters, QDir::Files | QDir::AllDirs | QDir::NoDotAndDotDot);
+
+            qDebug() << "filemanager.cpp: Checking dir: " << iterPath;
+
+            for (QFileInfo result : iterResults) {
+                if (result.isFile()) paths << "file://" + result.filePath();
+                else if (result.isDir()) nextIterPaths << result.filePath();
+            }
+        }
+
+        currentIterPaths = nextIterPaths;
+        nextIterPaths.clear();
+    }
+
+    return paths;
+}
+
 QJsonObject FileManager::getFileInfo(const QString path)
 {
     QFileInfo info(path);

@@ -16,13 +16,36 @@ View {
         Rectangle { id: bg; anchors.fill: parent; color: color_content_bg; radius: 4 }
         DropShadow { id: bg_shadow; anchors.fill: bg; color: cons.color.lightGray_3; source: bg; radius: 6 }
 
-        ListView {
-            id: pathsLv; clip: true; anchors {
-                top: parent.top; right: parent.right; bottom: parent.bottom; left: parent.left
+        Item {
+            id: header; width: parent.width; height: 54
+
+            Text {
+                text: "Video Directories / Videos"; color: color_primary
+                font { family: "Nickainley"; pixelSize: 29; weight: Font.Light } anchors {
+                    centerIn: parent; verticalCenterOffset: -4
+                }
             }
 
-            delegate: PathsDelegate {}
-            model: ListModel { id: pathsModel }
+            Rectangle {
+                width: header.width; height: 2; color:color_divider; anchors {
+                    horizontalCenter: parent.horizontalCenter; bottom: parent.bottom
+                }
+            }
+        }
+
+        Item {
+            id: pathsContent; clip: true; anchors {
+                top: header.bottom; right: parent.right; bottom: parent.bottom; left: parent.left
+            }
+
+            ListView {
+                id: pathsLv; anchors {
+                    fill: parent; topMargin: 6
+                }
+
+                delegate: PathsDelegate {}
+                model: ListModel { id: pathsModel }
+            }
         }
 
         Item {
@@ -70,6 +93,6 @@ View {
     }
 
     function finaliseFolderSelection(path) {
-        pathsModel.append({ "_path": path, '_dirFlag': true })
+        libc.addNewDirPath(path)
     }
 }

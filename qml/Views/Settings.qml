@@ -30,32 +30,31 @@ View {
             }
 
             Rectangle {
-                id: headerDiv
                 width: header.width; height: 2; color:color_divider; anchors {
                     horizontalCenter: parent.horizontalCenter; bottom: parent.bottom
                 }
             }
+        }
 
-            ColumnLayout {
-                id: contentLt; anchors {
-                    leftMargin: 20; topMargin: 16; rightMargin: 20
-                    left: parent.left; top: headerDiv.bottom; right: parent.right
+        ColumnLayout {
+            id: contentLt; anchors {
+                leftMargin: 20; topMargin: 16; rightMargin: 20
+                left: parent.left; top: header.bottom; right: parent.right
+            }
+
+            /* ----------------- SWITCH CONTENT ----------------- */
+
+            Switch {
+                Layout.fillWidth: true
+                text: "Dark Theme"; checked: darkTheme; onClicked: {
+                    darkTheme = checked
                 }
+            }
 
-                /* ----------------- SWITCH CONTENT ----------------- */
-
-                Switch {
-                    Layout.fillWidth: true
-                    text: "Dark Theme"; checked: darkTheme; onClicked: {
-                        darkTheme = checked
-                    }
-                }
-
-                Switch {
-                    Layout.fillWidth: true
-                    text: "Enable Console"; checked: enableConsole; onClicked: {
-                        enableConsole = checked
-                    }
+            Switch {
+                Layout.fillWidth: true
+                text: "Enable Console"; checked: enableConsole; onClicked: {
+                    enableConsole = checked
                 }
             }
         }
@@ -76,6 +75,8 @@ View {
     property bool darkTheme: true
     property bool enableConsole: true
 
+    property real volume: 1
+
     property color accentColor: cons.color.red_1
 
 
@@ -92,5 +93,7 @@ View {
 
         property alias darkTheme: rootSet.darkTheme
         property alias enableConsole: rootSet.enableConsole
+
+        property alias volume: rootSet.volume
     }
 }

@@ -8,6 +8,9 @@ View {
     id: rootPb
 
     property int currentVidId: -1
+    property int currentViewId: -1
+
+    property var currentVid: ({})
 
     Rectangle {
         id: vidContainer; color: "black"; anchors {
@@ -96,6 +99,12 @@ View {
                         right: parent.right; verticalCenter: parent.verticalCenter; rightMargin: 20
                     }
                 }
+
+                LikeButton {
+                    id: likeButton; anchors {
+                        right: fullscreenButton.left; verticalCenter: parent.verticalCenter; rightMargin: 12
+                    }
+                }
             }
         }
     }
@@ -107,25 +116,57 @@ View {
         }
     }
 
+    Timer {
+        /* View Update timer */
+        running: rootPb.visible; interval: 60000; onTriggered: {
+            updateView()
+        }
+    }
+
     function navigatedAway() {
         if (video.playbackState === MediaPlayer.PlayingState) {
             video.pause()
         }
+
+        updateView()
     }
 
     function loadVideo(vid_id) {
-        const path = libc.videos[vid_id].path
-        video.source = path
+        currentVidId = vid_id
+        currentVid = libc.videos[vid_id]
 
+        video.source = currentVid.path
+        video.volume = settings.volume
+
+        likeButton.count = currentVid.likes
         durationText.text = Qt.binding(function() {
             return mac.msToTimeStr(video.position) + " / " + mac.msToTimeStr(video.duration)
         })
 
-        currentVidId = vid_id
         nav.setCurrentIndex(99)
 
-        libc.updateViews(vid_id)
+        loadView(vid_id)
         mac.executeAfter(440, video.play)
+    }
+
+    function loadView(vid_id) {
+        const view = usc.getUserView(vid_id)
+
+        if (currentViewId !== view.id) {
+            currentViewId = view.id
+
+            if ((currentVid.duration - view.duration) < 1000) {
+                video.seek(0)
+            } else if (view.duration > 0) video.seek(view.duration)
+
+            likeButton.checked = view.liked
+
+            libc.updateGlobalViews(vid_id)
+        }
+    }
+
+    function updateView() {
+        usc.updateUserView(currentViewId, video.position, likeButton.checked ? 1 : 0)
     }
 
     function togglePlayPause() {

@@ -6,7 +6,7 @@ Item {
     height: parent.height
 
     onVisibleChanged: {
-        updateUI()
+        if (visible) updateUI()
     }
 
 

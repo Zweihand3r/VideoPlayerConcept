@@ -23,6 +23,9 @@ public slots:
     void createDirectory(const QString path);
     void deleteDirectory(const QString path);
 
+    /* Does not check if dir exists at path */
+    QStringList getFilePathsInDirectory(const QString path, const QStringList filters);
+
     QJsonObject getFileInfo(const QString path);
 };
 

@@ -41,12 +41,21 @@ View {
 
     function updateUI() {
         if (initialised) {
+            const durMap = {}
+            const views = dbc.getViews(usc.currentUserId, "dur")
+            views.forEach(function(view) {
+                durMap[view.vid] = view.duration
+            })
+
             videoModel.clear()
             for (var id in libc.videos) {
                 const video = libc.videos[id]
+                const durationWatched = durMap[id] ? durMap[id] : -1
                 videoModel.append({
-                                      "_id": id, "_thumbPath": "file://" + fm.currentPath + "/Thumbnails/thumb_" + id + ".png",
-                                      "_name": video.name, "_durationStr": video.durationStr, "_details": getDetails(video), "_vidPath": video.path
+                                      "_id": id,
+                                      "_name": video.name, "_details": getDetails(video), "_vidPath": video.path,
+                                      "_thumbPath": "file://" + fm.currentPath + "/Thumbnails/thumb_" + id + ".png",
+                                      "_duration": video.duration, "_durationStr": video.durationStr, "_durationWatched": durationWatched
                                   })
             }
         }
@@ -61,18 +70,8 @@ View {
     }
 
     function getDetails(video) {
-        const views = parseInt(video.views)
-
-        if (views >= 1000 && views < 1000000) {
-            var viewStr = Math.floor(views / 1000) + "K"
-        } else if (views >= 1000000) {
-            viewStr = Math.floor(views / 1000000) + "M"
-        } else {
-            viewStr = views
-        }
-
-        const now = Date.now()
-        const diff = Math.floor((now - (new Date(video.dateAdded)).getTime()) / 1000)
+        const viewStr = mac.formatNumber(video.views)
+        const diff = Math.floor((Date.now() - (new Date(video.dateAdded)).getTime()) / 1000)
 
         if (diff < 60) {
             var dateStr = Math.floor(diff) + " seconds ago"

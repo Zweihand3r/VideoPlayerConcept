@@ -129,9 +129,9 @@ View {
     ListModel {
         id: navModel
 
-        ListElement { _text: "Home"; _source: 'qrc:/assets/icons/x48/home.png'; _dimension: 32 }
-        ListElement { _text: "Library"; _source: 'qrc:/assets/icons/x48/folder.png'; _dimension: 26 }
-        ListElement { _text: "Settings"; _source: 'qrc:/assets/icons/x48/settings.png'; _dimension: 30 }
+        ListElement { _text: "Home"; _source: 'qrc:/assets/icons/x48/home.png'; _nav: "home"; _dimension: 32 }
+        ListElement { _text: "Library"; _source: 'qrc:/assets/icons/x48/folder.png'; _nav: "library"; _dimension: 26 }
+        ListElement { _text: "Settings"; _source: 'qrc:/assets/icons/x48/settings.png'; _nav: "settings"; _dimension: 30 }
     }
 
     function present() { expanded = true }

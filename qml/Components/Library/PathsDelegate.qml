@@ -5,7 +5,7 @@ import '../Basic'
 Item {
     id: rootPd
     width: pathsLv.width
-    height: 32
+    height: 28
 
     Item {
         /* Content */ anchors {
@@ -30,12 +30,12 @@ Item {
         }
     }
 
-    Rectangle {
+    /*Rectangle {
         id: div; height: 1; color: color_divider; anchors {
             leftMargin: -8; rightMargin: -8
             bottom: parent.bottom; left: parent.left; right: parent.right
         }
-    }
+    }*/
 
     Component.onCompleted: {
         if (_dirFlag) {

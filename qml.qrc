@@ -36,5 +36,10 @@
         <file>qml/Console/Textual.qml</file>
         <file>qml/Components/Library/ThumbnailGenerator.qml</file>
         <file>qml/Components/Home/VideoDelegate.qml</file>
+        <file>qml/Controllers/UserController.qml</file>
+        <file>qml/Components/Playback/LikeButton.qml</file>
+        <file>qml/Views/LoadProgress.qml</file>
+        <file>qml/Views/History.qml</file>
+        <file>qml/Constants/NavConst.qml</file>
     </qresource>
 </RCC>

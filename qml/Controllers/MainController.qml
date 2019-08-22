@@ -18,6 +18,7 @@ Item {
 
         dbc.init()
         libc.init()
+        usc.init()
     }
 
 
@@ -58,6 +59,16 @@ Item {
         drawables.visible = visible
     }
 
+    function formatNumber(number) {
+        if (number >= 1000 && number < 1000000) {
+            return Math.floor(number / 1000) + "K"
+        } else if (number >= 1000000) {
+            return Math.floor(number / 1000000) + "M"
+        } else {
+            return number
+        }
+    }
+
     function msToTimeStr(ms) {
         const timesec = Math.floor(ms / 1000)
         const mins = Math.floor(timesec % 3600 / 60)
@@ -73,5 +84,10 @@ Item {
             const hrs = Math.floor(timesec / 3600)
             return (hrs + ":" + minStr + ":" + secStr)
         }
+    }
+
+    function checkIfEmpty(map) {
+        for (var key in map) return false
+        return true
     }
 }

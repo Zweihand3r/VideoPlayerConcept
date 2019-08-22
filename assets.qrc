@@ -22,5 +22,7 @@
         <file>assets/fonts/OpenSans-CondLight.ttf</file>
         <file>assets/fonts/Mohave-Light.otf</file>
         <file>assets/fonts/OpenSans-Regular.ttf</file>
+        <file>assets/icons/x48/favorite_border.png</file>
+        <file>assets/icons/x48/favorite.png</file>
     </qresource>
 </RCC>

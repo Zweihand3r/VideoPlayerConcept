@@ -81,6 +81,7 @@ MouseArea {
     function setVolume(volume) {
         if (muted) muted = false
         video.volume = volume
+        settings.volume = volume
     }
 
     function toggleMute() {

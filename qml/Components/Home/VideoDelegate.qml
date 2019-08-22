@@ -38,6 +38,17 @@ MouseArea {
                 }
             }
         }
+
+        Rectangle {
+            id: watchProgress; height: 4; color: cons.color.lightGray_3; anchors {
+                left: parent.left; right: parent.right; bottom: parent.bottom
+            }
+
+            Rectangle {
+                height: parent.height; color: settings.accentColor
+                width: _durationWatched / _duration * parent.width
+            }
+        }
     }
 
     Loader {
@@ -98,6 +109,12 @@ MouseArea {
         id: finishPreviewAnim
         target: previewLoader; from: 1; to: 0; duration: 180
         onStopped: exitCompleteHandler()
+    }
+
+    Component.onCompleted: {
+        if (_durationWatched === -1) {
+            watchProgress.visible = false
+        }
     }
 
     function triggerPreview() {

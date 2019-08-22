@@ -30,6 +30,7 @@ Item {
     FileDialogController { id: fic }
     DatabaseController { id: dbc }
     LibraryController { id: libc }
+    UserController { id: usc }
 
 
     /* ------------- DRAWABLES ------------- */
@@ -53,6 +54,8 @@ Item {
         Navigation { id: nav }
         Navbar { id: navbar }
     }
+
+    LoadProgress { id: loadProg }
 
 
     /* ---------------- MISC --------------- */

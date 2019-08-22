@@ -9,6 +9,8 @@ Item {
 
     objectName: "LibC"
 
+    property bool debugThumbnailProcessing: false
+
     property int vidBatchAddIndex: 0
     property var vidBatchAddPaths: []
 
@@ -23,9 +25,7 @@ Item {
     ThumbnailGenerator {
         id: thumbGen
 
-        onStarted: mac.setDrawablesVisibility(false)
         onCompleted: vidBatchAddLoop()
-
         onDurationSet: setDuration(id, duration)
     }
 
@@ -45,17 +45,30 @@ Item {
 
     function addNewDirPath(path) {
         addNewLibPath(path, true)
+
+        const vidPaths = fm.getFilePathsInDirectory(formatPath(path), ["*.mp4"])
+        beginVidBatchAdd(vidPaths)
     }
 
     function setDuration(vid_id, duration) {
-        dbc.updateVideos(vid_id, "duration", duration)
-        dbc.updateVideos(vid_id, "durationStr", mac.msToTimeStr(duration))
+        dbc.updateVideo(vid_id, "duration", duration)
+        videos[vid_id].duration = duration
+
+        const durationStr = mac.msToTimeStr(duration)
+        dbc.updateVideo(vid_id, "durationStr", durationStr)
+        videos[vid_id].durationStr = durationStr
     }
 
-    function updateViews(vid_id) {
+    function updateGlobalViews(vid_id) {
         const updatedViews = videos[vid_id].views + 1
         videos[vid_id].views = updatedViews
-        dbc.updateVideos(vid_id, "views", updatedViews)
+        dbc.updateVideo(vid_id, "views", updatedViews)
+    }
+
+    function updateGlobalLikes(vid_id, liked) {
+        const updatedLikes = videos[vid_id].likes + (liked ? 1 : -1)
+        videos[vid_id].likes = updatedLikes
+        dbc.updateVideo(vid_id, "likes", updatedLikes)
     }
 
 
@@ -65,15 +78,23 @@ Item {
         vidBatchAddIndex = 0
         vidBatchAddPaths = paths
         vidBatchAddLoop()
+
+        if (debugThumbnailProcessing) {
+            mac.setDrawablesVisibility(false)
+        } else loadProg.start(paths.length)
     }
 
     function vidBatchAddLoop() {
         if (vidBatchAddIndex < vidBatchAddPaths.length) {
             addNewVideo(vidBatchAddPaths[vidBatchAddIndex++])
+            loadProg.incrementProgress()
         } else {
             /* Finish */
 
-            mac.setDrawablesVisibility(true)
+            if (!debugThumbnailProcessing) {
+                loadProg.incrementProgress()
+                mac.executeAfter(500, loadProg.dismiss)
+            } else mac.setDrawablesVisibility(true)
         }
     }
 
@@ -101,7 +122,10 @@ Item {
     function initialiseVideos() {
         const _vids = dbc.getVideos()
         _vids.forEach(function(vid) {
-            videos[vid.id] = { "name": vid.name, "path": vid.path, "durationStr": vid.durationStr, "views": vid.views, "likes": vid.likes, "dateAdded": vid.dateAdded }
+            videos[vid.id] = {
+                "name": vid.name, "path": vid.path, "duration": vid.duration,
+                "durationStr": vid.durationStr, "views": vid.views, "likes": vid.likes, "dateAdded": vid.dateAdded
+            }
         })
 
         console.log("LibraryController.qml: Initialised Videos: ")
