@@ -93,6 +93,12 @@ View {
                     dismiss()
                 }
 
+                Component.onCompleted: {
+                    if (index === currentIndex) {
+                        highlight.opacity = 1
+                    }
+                }
+
                 Rectangle {
                     id: highlight; anchors.fill: parent; opacity: 0; color: color_highlight
 
