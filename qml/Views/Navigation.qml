@@ -12,13 +12,15 @@ View {
         top: parent.top; topMargin: fullscreenActive ? -height : 0
     }
 
-    property int currentIndex: 0
+    property string currentId: cons.nav.home
     property View currentItem: home
 
     readonly property var map: {
-        99: playback, 0: home, 1: library, 2: settings,
+        "home": playback,
 
-        100: nav, 101: navbar
+        "home": home, "library": library, "settings": settings,
+
+        "nav": nav, "navbar": navbar
     }
 
     Rectangle { id: bg; anchors.fill: parent; color: color_background }
@@ -42,13 +44,13 @@ View {
         updateTheme(settings.darkTheme)
     }
 
-    function setCurrentIndex(navIndex) {
-        if (navIndex < 100) {
+    function setCurrentId(navId) {
+        if (map[navId]) {
             currentItem.dismiss()
             currentItem.navigatedAway()
 
-            currentIndex = navIndex
-            currentItem = map[currentIndex]
+            currentId = navId
+            currentItem = map[navId]
 
             currentItem.present()
             currentItem.navigatedTo()
@@ -60,7 +62,7 @@ View {
     /* ---------------- OVERRIDES ----------------- */
 
     function updateTheme(darkTheme) {
-        if (currentIndex === 99) setDarkTheme()
+        if (currentId === cons.nav.playback) setDarkTheme()
         else {
             if (darkTheme) setDarkTheme()
             else setLightTheme()

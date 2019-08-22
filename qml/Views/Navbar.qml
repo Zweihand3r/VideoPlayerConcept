@@ -9,6 +9,8 @@ View {
 
     property bool expanded: false
 
+    property int currentIndex: 0
+
     property color color_nonHighlight: cons.color.lightGray_3
 
     Rectangle {
@@ -68,25 +70,26 @@ View {
                 id: navDelegate
                 width: contentLV.width; height: 44; hoverEnabled: true
 
-                property bool hasHighlight: index === nav.currentIndex
+                property bool hasHighlight: index === currentIndex
 
                 onHasHighlightChanged: {
                     if (!hasHighlight) cellLoseHighlightAnim.start()
                 }
 
                 onExited: {
-                    if (index !== nav.currentIndex) cellLoseHighlightAnim.start()
+                    if (index !== currentIndex) cellLoseHighlightAnim.start()
                 }
 
                 onEntered: {
-                    if (index !== nav.currentIndex) {
+                    if (index !== currentIndex) {
                         if (cellLoseHighlightAnim.running) cellLoseHighlightAnim.stop()
                         highlight.opacity = 1
                     }
                 }
 
                 onClicked: {
-                    nav.setCurrentIndex(index)
+                    currentIndex = index
+                    nav.setCurrentId(_navId)
                     dismiss()
                 }
 
@@ -129,9 +132,9 @@ View {
     ListModel {
         id: navModel
 
-        ListElement { _text: "Home"; _source: 'qrc:/assets/icons/x48/home.png'; _nav: "home"; _dimension: 32 }
-        ListElement { _text: "Library"; _source: 'qrc:/assets/icons/x48/folder.png'; _nav: "library"; _dimension: 26 }
-        ListElement { _text: "Settings"; _source: 'qrc:/assets/icons/x48/settings.png'; _nav: "settings"; _dimension: 30 }
+        ListElement { _text: "Home"; _source: 'qrc:/assets/icons/x48/home.png'; _navId: "home"; _dimension: 32 }
+        ListElement { _text: "Library"; _source: 'qrc:/assets/icons/x48/folder.png'; _navId: "library"; _dimension: 26 }
+        ListElement { _text: "Settings"; _source: 'qrc:/assets/icons/x48/settings.png'; _navId: "settings"; _dimension: 30 }
     }
 
     function present() { expanded = true }

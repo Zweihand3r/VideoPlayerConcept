@@ -143,7 +143,7 @@ View {
             return mac.msToTimeStr(video.position) + " / " + mac.msToTimeStr(video.duration)
         })
 
-        nav.setCurrentIndex(99)
+        nav.setCurrentId(cons.nav.playback)
 
         loadView(vid_id)
         mac.executeAfter(440, video.play)
