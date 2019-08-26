@@ -24,5 +24,12 @@
         <file>assets/fonts/OpenSans-Regular.ttf</file>
         <file>assets/icons/x48/favorite_border.png</file>
         <file>assets/icons/x48/favorite.png</file>
+        <file>assets/icons/x48/history.png</file>
+        <file>assets/icons/x48/forward_10.png</file>
+        <file>assets/icons/x48/replay_10.png</file>
+        <file>assets/icons/x48/forward_5.png</file>
+        <file>assets/icons/x48/replay_5.png</file>
+        <file>assets/icons/x48/pause.png</file>
+        <file>assets/icons/x48/play.png</file>
     </qresource>
 </RCC>

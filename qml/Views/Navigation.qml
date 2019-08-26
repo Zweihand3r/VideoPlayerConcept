@@ -16,9 +16,13 @@ View {
     property View currentItem: home
 
     readonly property var map: {
-        "home": playback,
+        "playback": playback,
 
-        "home": home, "library": library, "settings": settings,
+        "home": home,
+        "history": history,
+        "favorites": favorites,
+        "library": library,
+        "settings": settings,
 
         "nav": nav, "navbar": navbar
     }

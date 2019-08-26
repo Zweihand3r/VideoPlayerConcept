@@ -41,8 +41,8 @@ Item {
             color_divider = cons.color.lightGray_2_5
         }
 
-        for (var index in nav.map) {
-            nav.map[index].updateTheme(darkTheme)
+        for (var id in nav.map) {
+            nav.map[id].updateTheme(darkTheme)
         }
     }
 

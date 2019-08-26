@@ -39,6 +39,10 @@ View {
         }
     }
 
+    function navigatedAway() {
+        videoModel.clear()
+    }
+
     function updateUI() {
         if (initialised) {
             const durMap = {}
@@ -47,7 +51,6 @@ View {
                 durMap[view.vid] = view.duration
             })
 
-            videoModel.clear()
             for (var id in libc.videos) {
                 const video = libc.videos[id]
                 const durationWatched = durMap[id] ? durMap[id] : -1

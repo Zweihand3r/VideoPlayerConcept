@@ -139,6 +139,8 @@ View {
         id: navModel
 
         ListElement { _text: "Home"; _source: 'qrc:/assets/icons/x48/home.png'; _navId: "home"; _dimension: 32 }
+        ListElement { _text: "History"; _source: 'qrc:/assets/icons/x48/history.png'; _navId: "history"; _dimension: 32 }
+        ListElement { _text: "Favorites"; _source: 'qrc:/assets/icons/x48/favorite_border.png'; _navId: "favorites"; _dimension: 32 }
         ListElement { _text: "Library"; _source: 'qrc:/assets/icons/x48/folder.png'; _navId: "library"; _dimension: 26 }
         ListElement { _text: "Settings"; _source: 'qrc:/assets/icons/x48/settings.png'; _navId: "settings"; _dimension: 30 }
     }
@@ -150,7 +152,7 @@ View {
         if (darkTheme) {
             color_nonHighlight = cons.color.lightGray_3
         } else {
-            color_nonHighlight = cons.color.darkGray_3
+            color_nonHighlight = cons.color.darkGray_4
         }
     }
 }

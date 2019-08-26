@@ -5,7 +5,7 @@ Item {
     implicitWidth: image.implicitWidth
     implicitHeight: image.implicitHeight
 
-    property color tint
+    property string tint: ""
 
     property alias source: image.source
     property alias fillMode: image.fillMode
@@ -13,7 +13,7 @@ Item {
     Image { id: image; anchors.fill: parent }
 
     Component.onCompleted: {
-        if (tint !== undefined) {
+        if (tint.length > 0) {
             image.visible = false
 
             Qt.createQmlObject('

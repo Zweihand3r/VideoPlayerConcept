@@ -21,8 +21,8 @@ View {
             id: video; anchors.fill: parent; focus: true
 
             Keys.onSpacePressed: togglePlayPause()
-            Keys.onLeftPressed: video.seek(video.position - 5000)
-            Keys.onRightPressed: video.seek(video.position + 5000)
+            Keys.onLeftPressed: replay()
+            Keys.onRightPressed: forward()
         }
 
         MouseArea {
@@ -34,15 +34,15 @@ View {
             onMouseYChanged: showControlPanel(mouseY)
 
             Item {
-                id: playPauseIndicator
+                id: playbackControlIndicator
                 width: 54; height: 54; opacity: 0; anchors { centerIn: parent }
                 Rectangle { anchors.fill: parent; color: cons.color.darkGray_1; opacity: 0.75; radius: width / 2 }
-                Image { id: playPauseIndicatorIcon; tint: cons.color.lightGray_1; anchors { fill: parent; margins: 16 } }
+                Image { id: playbackControlIcon; tint: cons.color.lightGray_1; anchors { fill: parent; margins: 8 } }
 
                 ParallelAnimation {
-                    id: playPauseIndicatorAnim
-                    ScaleAnimator { target: playPauseIndicator; from: 1; to: 1.25; duration: 360; easing.type: Easing.InQuad }
-                    OpacityAnimator { target: playPauseIndicator; from: 1; to: 0; duration: 360; easing.type: Easing.InQuad }
+                    id: playbackControlAnim
+                    ScaleAnimator { target: playbackControlIndicator; from: 1; to: 1.25; duration: 360; easing.type: Easing.InQuad }
+                    OpacityAnimator { target: playbackControlIndicator; from: 1; to: 0; duration: 360; easing.type: Easing.InQuad }
                 }
             }
 
@@ -123,6 +123,8 @@ View {
         }
     }
 
+    /* -------------------- OVERRIDES -------------------- */
+
     function navigatedAway() {
         if (video.playbackState === MediaPlayer.PlayingState) {
             video.pause()
@@ -130,6 +132,8 @@ View {
 
         updateView()
     }
+
+    /* -------------------- FUNCTIONS -------------------- */
 
     function loadVideo(vid_id) {
         currentVidId = vid_id
@@ -169,16 +173,26 @@ View {
         usc.updateUserView(currentViewId, video.position, likeButton.checked ? 1 : 0)
     }
 
+    /* ---------------- PLAYBACK CONTROLS ---------------- */
+
     function togglePlayPause() {
         if (video.playbackState === MediaPlayer.PlayingState) {
             video.pause()
-            playPauseIndicatorIcon.source = 'qrc:/assets/icons/x32/pause.png'
+            animatePlaybackControls('qrc:/assets/icons/x48/pause.png')
         } else {
             video.play()
-            playPauseIndicatorIcon.source = 'qrc:/assets/icons/x32/play.png'
+            animatePlaybackControls('qrc:/assets/icons/x48/play.png')
         }
+    }
 
-        playPauseIndicatorAnim.start()
+    function replay() {
+        video.seek(video.position - 5000)
+        animatePlaybackControls('qrc:/assets/icons/x48/replay_5.png')
+    }
+
+    function forward() {
+        video.seek(video.position + 5000)
+        animatePlaybackControls('qrc:/assets/icons/x48/forward_5.png')
     }
 
     function toggleFullscreen() {
@@ -210,5 +224,10 @@ View {
 
     function hideControlPanel() {
         controlPanel.opacity = 0
+    }
+
+    function animatePlaybackControls(source) {
+        playbackControlIcon.source = source
+        playbackControlAnim.start()
     }
 }

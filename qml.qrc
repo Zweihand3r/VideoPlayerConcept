@@ -41,5 +41,8 @@
         <file>qml/Views/LoadProgress.qml</file>
         <file>qml/Views/History.qml</file>
         <file>qml/Constants/NavConst.qml</file>
+        <file>qml/Views/Favorites.qml</file>
+        <file>qml/Components/QML/QImage.qml</file>
+        <file>qml/Components/History/VideoDelegate.qml</file>
     </qresource>
 </RCC>

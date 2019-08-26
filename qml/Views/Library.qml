@@ -9,8 +9,9 @@ View {
     id: rootLib
 
     Item {
-        id: pathContent; width: parent.width / 2 - 30; anchors {
-            left: parent.left; top: parent.top; bottom: parent.bottom; margins: 20
+        id: pathContent; width: parent.width / 2; anchors {
+            horizontalCenter: parent.horizontalCenter
+            top: parent.top; bottom: parent.bottom; margins: 20
         }
 
         Rectangle { id: bg; anchors.fill: parent; color: color_content_bg; radius: 4 }

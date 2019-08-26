@@ -10,6 +10,7 @@ QtObject {
     readonly property string darkGray_1: "#0F0F0F"
     readonly property string darkGray_2: "#2E2F2F"
     readonly property string darkGray_3: "#565757"
+    readonly property string darkGray_4: "#7A7B7C"
 
     readonly property string red_1: "#F01234"
 

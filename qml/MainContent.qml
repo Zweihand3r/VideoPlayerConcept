@@ -47,6 +47,8 @@ Item {
 
             Playback { id: playback }
             Home { id: home }
+            History { id: history }
+            Favorites { id: favorites }
             Library { id: library }
             Settings { id: settings }
         }
