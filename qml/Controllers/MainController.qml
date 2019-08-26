@@ -25,6 +25,7 @@ Item {
     function applyTheme(darkTheme) {
         if (darkTheme) {
             color_primary = cons.color.lightGray_1
+            color_secondary = cons.color.lightGray_3
             color_accent = cons.color.lightGray_1
             color_background = cons.color.darkGray_1
 
@@ -33,6 +34,7 @@ Item {
             color_divider = cons.color.darkGray_1
         } else {
             color_primary = cons.color.darkGray_2
+            color_secondary = cons.color.darkGray_3
             color_accent = settings.accentColor
             color_background = cons.color.lightGray_1
 
@@ -57,6 +59,24 @@ Item {
     function setDrawablesVisibility(visible) {
         if (visible === undefined) visible = !drawables.visible
         drawables.visible = visible
+    }
+
+    function getDateElapsedSince(date) {
+        const diff = Math.floor((Date.now() - (new Date(date)).getTime()) / 1000)
+
+        if (diff < 60) {
+            return Math.floor(diff) + " seconds ago"
+        } else if (diff >= 60 && diff < 3600) {
+            return Math.floor(diff / 60) + " minutes ago"
+        } else if (diff >= 3600 && diff < 86400) {
+            return Math.floor(diff / 3600) + " hours ago"
+        } else if (diff >= 86400 && diff < 2592000) {
+            return Math.floor(diff / 86400) + " days ago"
+        } else if (diff >= 2592000 && diff < 31536000) {
+            return Math.floor(diff / 2592000) + " months ago"
+        } else {
+            return Math.floor(diff / 31536000) + " years ago"
+        }
     }
 
     function formatNumber(number) {

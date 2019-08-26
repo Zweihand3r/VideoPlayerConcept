@@ -18,6 +18,7 @@ Item {
 
     property color color_accent: cons.color.red_1
     property color color_primary: cons.color.lightGray_1
+    property color color_secondary: cons.color.lightGray_3
     property color color_highlight: cons.color.darkGray_2
     property color color_background: cons.color.darkGray_1
     property color color_content_bg: cons.color.darkGray_2

@@ -12,8 +12,6 @@ View {
 
     property int possibleColumnCount: 0
 
-    property string color_secondary: cons.color.lightGray_3
-
     onWidthChanged: possibleColumnCount = Math.floor(width / 220)
 
     GridView {
@@ -28,7 +26,7 @@ View {
 
     ListModel {
         id: videoModel
-        /*ListElement { _id: ID; _thumbPath: 'PATH'; _name: "NAME"; _durationStr: "DURATION; _details: "DETAILS" }*/
+        /*ListElement { _id: ID; _vidPath: "PATH"; _thumbPath: 'PATH'; _name: "NAME"; _duration: "DUR INT"; _durationWatched: "DUR INT"; _durationStr: "DURATION; _details: "DETAILS" }*/
     }
 
     Timer {
@@ -64,31 +62,9 @@ View {
         }
     }
 
-    function updateTheme(darkTheme) {
-        if (darkTheme) {
-            color_secondary = cons.color.lightGray_3
-        } else {
-            color_secondary = cons.color.darkGray_3
-        }
-    }
-
     function getDetails(video) {
         const viewStr = mac.formatNumber(video.views)
-        const diff = Math.floor((Date.now() - (new Date(video.dateAdded)).getTime()) / 1000)
-
-        if (diff < 60) {
-            var dateStr = Math.floor(diff) + " seconds ago"
-        } else if (diff >= 60 && diff < 3600) {
-            dateStr = Math.floor(diff / 60) + " minutes ago"
-        } else if (diff >= 3600 && diff < 86400) {
-            dateStr = Math.floor(diff / 3600) + " hours ago"
-        } else if (diff >= 86400 && diff < 2592000) {
-            dateStr = Math.floor(diff / 86400) + " days ago"
-        } else if (diff >= 2592000 && diff < 31536000) {
-            dateStr = Math.floor(diff / 2592000) + " months ago"
-        } else {
-            dateStr = Math.floor(diff / 31536000) + " years ago"
-        }
+        const dateStr = mac.getDateElapsedSince(video.dateAdded)
 
         return viewStr + " views • " + dateStr
     }

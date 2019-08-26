@@ -44,5 +44,6 @@
         <file>qml/Views/Favorites.qml</file>
         <file>qml/Components/QML/QImage.qml</file>
         <file>qml/Components/History/VideoDelegate.qml</file>
+        <file>qml/Components/Favorites/VideoDelegate.qml</file>
     </qresource>
 </RCC>

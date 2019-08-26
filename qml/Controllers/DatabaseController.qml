@@ -87,7 +87,8 @@ Item {
 
         switch (type) {
         case "dur": var query = 'SELECT vid, duration FROM Views WHERE uid=?'; break
-        case "his": query = 'SELECT vid FROM Views WHERE uid=? ORDER BY lastWatched DESC'; break
+        case "his": query = 'SELECT vid, duration, lastWatched FROM Views WHERE uid=? ORDER BY lastWatched DESC'; break
+        case "lik": query = 'SELECT vid, duration FROM Views WHERE uid=?'; break
         }
 
         var views = []
