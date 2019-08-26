@@ -6,6 +6,7 @@ import '../Components/Shared'
 View {
     id: rootNb
     visible: true
+    resizable: false
 
     property bool expanded: false
 

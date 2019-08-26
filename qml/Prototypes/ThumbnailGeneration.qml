@@ -19,7 +19,7 @@ Item {
         Image {
             id: stimage
             visible: false; anchors.centerIn: parent
-            source: 'qrc:/assets/icons/video_call.png'
+            source: 'qrc:/assets/icons/x48/video_call.png'
         }
 
         MouseArea {

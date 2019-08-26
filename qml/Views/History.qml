@@ -9,7 +9,7 @@ View {
     objectName: "History"
 
     Item {
-        width: 640; anchors {
+        width: parent.width / 2; anchors {
             horizontalCenter: parent.horizontalCenter
             top: parent.top; bottom: parent.bottom; margins: 20
         }
@@ -40,8 +40,8 @@ View {
             }
 
             ListView {
-                spacing: 8; anchors {
-                    fill: parent; margins: 8
+                spacing: 12; anchors {
+                    fill: parent; margins: 12
                 }
 
                 model: historyModel; delegate: VideoDelegate {

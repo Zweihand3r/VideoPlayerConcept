@@ -8,7 +8,7 @@ import '../Components/Controls'
 
 View {
     id: rootNav; visible: true
-    width: parent.width; height: 64; anchors {
+    width: parent.width; height: 64; resizable: false; anchors {
         top: parent.top; topMargin: fullscreenActive ? -height : 0
     }
 

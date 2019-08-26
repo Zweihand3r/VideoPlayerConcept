@@ -2,11 +2,26 @@ import QtQuick 2.13
 
 Item {
     id: rootView
-    width: parent.width
-    height: parent.height
+    width: applicationWidth
+    height: applicationHeight
+
+    property bool resizable: true
 
     onVisibleChanged: {
-        if (visible) updateUI()
+        if (visible) {
+            updateUI()
+
+            if (resizable) {
+                width = Qt.binding(function() { return parent.width })
+                height = Qt.binding(function() { return parent.height })
+            }
+
+        } else {
+            if (resizable) {
+                width = parent.width
+                height = parent.height
+            }
+        }
     }
 
 

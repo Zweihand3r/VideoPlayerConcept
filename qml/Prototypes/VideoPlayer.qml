@@ -37,8 +37,8 @@ Rectangle {
                     anchors { fill: parent; margins: 4 } source: {
                         switch (playback.playbackState) {
                         case MediaPlayer.PausedState:
-                        case MediaPlayer.StoppedState: return 'qrc:/assets/icons/pause.png'
-                        case MediaPlayer.PlayingState: return 'qrc:/assets/icons/play.png'
+                        case MediaPlayer.StoppedState: return 'qrc:/assets/icons/x32/pause.png'
+                        case MediaPlayer.PlayingState: return 'qrc:/assets/icons/x32/play.png'
                         }
                     }
                 }
@@ -140,8 +140,8 @@ Rectangle {
                         anchors { fill: parent; margins: 6 } source: {
                             switch (playback.playbackState) {
                             case MediaPlayer.PausedState:
-                            case MediaPlayer.StoppedState: return 'qrc:/assets/icons/play.png'
-                            case MediaPlayer.PlayingState: return 'qrc:/assets/icons/pause.png'
+                            case MediaPlayer.StoppedState: return 'qrc:/assets/icons/x32/play.png'
+                            case MediaPlayer.PlayingState: return 'qrc:/assets/icons/x32/pause.png'
                             }
                         }
                     }

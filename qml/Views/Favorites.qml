@@ -9,7 +9,7 @@ View {
     objectName: "Faorites"
 
     Item {
-        width: 640; anchors {
+        width: parent.width / 2; anchors {
             horizontalCenter: parent.horizontalCenter
             top: parent.top; bottom: parent.bottom; margins: 20
         }
