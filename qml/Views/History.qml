@@ -67,7 +67,7 @@ View {
             const video = libc.videos[view.vid]
             historyModel.append({
                                     "_id": view.vid, "_name": video.name, "_details": getDetails(view),
-                                    "_thumbPath": "file://" + fm.currentPath + "/Thumbnails/thumb_" + view.vid + ".png",
+                                    "_thumbPath": "file://" + fm.currentPath + libc.getItemThumbPath(view.vid),
                                     "_duration": video.duration, "_durationStr": video.durationStr, "_durationWatched": view.duration
                                 })
         })

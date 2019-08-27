@@ -4,6 +4,8 @@
 
 #include "cpp/filemanager.h"
 
+#define DEBUG_BUILD true
+
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -12,10 +14,18 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
+    bool debug_build = DEBUG_BUILD;
+
+#if DEBUG_BUILD
+    engine.setOfflineStoragePath("OfflineStorage_Deb");
+#else
+    engine.setOfflineStoragePath("OfflineStorage");
+#endif
+
     FileManager *fm = new FileManager();
     engine.rootContext()->setContextProperty("fm", fm);
 
-    engine.setOfflineStoragePath("OfflineStorage");
+    engine.rootContext()->setContextProperty("debug_build", debug_build);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

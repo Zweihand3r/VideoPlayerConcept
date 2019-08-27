@@ -14,6 +14,8 @@ Item {
     property int vidBatchAddIndex: 0
     property var vidBatchAddPaths: []
 
+    readonly property string thumbDirPath: "Thumbnails" + (debug_build ? "_Deb" : "")
+
     property var libPaths: [
         /*{ "path": "C:/Users/USER/Downloads", "dirFlag": true }*/
     ]
@@ -33,6 +35,10 @@ Item {
     function init() {
         initialiseLibPaths()
         initialiseVideos()
+    }
+
+    function getItemThumbPath(id) {
+        return "/" + thumbDirPath + "/thumb_" + id + ".png"
     }
 
     function addNewVidPaths(paths) {
@@ -161,6 +167,6 @@ Item {
     function wipeLibrary() {
         dbc.drop("LibPaths")
         dbc.drop("Videos")
-        fm.deleteDirectory(fm.currentPath + "/Thumbnails")
+        fm.deleteDirectory(fm.currentPath + thumbPath)
     }
 }

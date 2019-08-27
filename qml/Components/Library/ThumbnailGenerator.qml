@@ -88,7 +88,7 @@ Item {
 
     function processTrigger() {
         genFrame.grabToImage(function(result) {
-            const path = "Thumbnails/thumb_" + currentGenId + ".png"
+            const path = getItemThumbPath(currentGenId).substring(1)
             result.saveToFile(path)
         })
 

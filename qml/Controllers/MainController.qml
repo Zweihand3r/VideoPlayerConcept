@@ -14,7 +14,7 @@ Item {
 
 
     Component.onCompleted: {
-        fm.createDirectory("Thumbnails")
+        fm.createDirectory(libc.thumbDirPath)
 
         dbc.init()
         libc.init()
