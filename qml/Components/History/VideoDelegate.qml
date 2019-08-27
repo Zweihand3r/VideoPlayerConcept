@@ -42,15 +42,17 @@ MouseArea {
     }
 
     ColumnLayout {
-        spacing: -2; anchors {
+        spacing: 0; anchors {
             verticalCenter: parent.verticalCenter
-            left: thumb.right; leftMargin: 8; right: parent.right; rightMargin: 8
+            left: thumb.right; leftMargin: 12; right: parent.right; rightMargin: 8
         }
 
         Text {
             Layout.fillWidth: true
             text: _name; color: color_primary
-            wrapMode: Text.Wrap; font.pixelSize: 25
+            wrapMode: Text.Wrap; font {
+                pixelSize: 25; family: "Open Sans"; weight: Font.Light
+            }
         }
 
         Text {
