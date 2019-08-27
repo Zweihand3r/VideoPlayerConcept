@@ -31,5 +31,6 @@
         <file>assets/icons/x48/replay_5.png</file>
         <file>assets/icons/x48/pause.png</file>
         <file>assets/icons/x48/play.png</file>
+        <file>assets/icons/x48/cloud.png</file>
     </qresource>
 </RCC>
