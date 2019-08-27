@@ -7,8 +7,13 @@ Slider {
     background: Rectangle {
         x: rootVSl.leftPadding
         y: rootVSl.topPadding + rootVSl.availableHeight / 2 - height / 2
-        implicitWidth: 200; implicitHeight: 4; color: "#676767"
+        implicitWidth: 200; implicitHeight: 4; color: "#343434"
         width: rootVSl.availableWidth; height: implicitHeight; radius: 2
+
+        Rectangle {
+            height: parent.height; color: "#9A9A9A"
+            width: parent.width * playback.bufferProgress
+        }
 
         Rectangle {
             width: rootVSl.visualPosition * parent.width

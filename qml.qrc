@@ -45,5 +45,6 @@
         <file>qml/Components/QML/QImage.qml</file>
         <file>qml/Components/History/VideoDelegate.qml</file>
         <file>qml/Components/Favorites/VideoDelegate.qml</file>
+        <file>qml/Prototypes/WebPlayer.qml</file>
     </qresource>
 </RCC>

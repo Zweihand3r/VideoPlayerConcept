@@ -139,18 +139,16 @@ View {
         currentVidId = vid_id
         currentVid = libc.videos[vid_id]
 
-        video.source = currentVid.path
-        video.volume = settings.volume
-
+        likeButton.visible = true
         likeButton.count = currentVid.likes
-        durationText.text = Qt.binding(function() {
-            return mac.msToTimeStr(video.position) + " / " + mac.msToTimeStr(video.duration)
-        })
-
-        nav.setCurrentId(cons.nav.playback)
 
         loadView(vid_id)
-        mac.executeAfter(440, video.play)
+        sharedVidLoader(currentVid.path)
+    }
+
+    function loadExtVideo(url) {
+        likeButton.visible = false
+        sharedVidLoader(url)
     }
 
     function loadView(vid_id) {
@@ -167,6 +165,18 @@ View {
 
             libc.updateGlobalViews(vid_id)
         }
+    }
+
+    function sharedVidLoader(path) {
+        video.source = path
+        video.volume = settings.volume
+
+        durationText.text = Qt.binding(function() {
+            return mac.msToTimeStr(video.position) + " / " + mac.msToTimeStr(video.duration)
+        })
+
+        nav.setCurrentId(cons.nav.playback)
+        mac.executeAfter(440, video.play)
     }
 
     function updateView() {
