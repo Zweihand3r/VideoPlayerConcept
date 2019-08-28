@@ -10,7 +10,7 @@ MouseArea {
 
     Image {
         id: thumb; width: 140; height: 80
-        source: _thumbPath; fillMode: Image.Tile; anchors {
+        source: _thumbPath; fillMode: Image.PreserveAspectCrop; anchors {
             verticalCenter: parent.verticalCenter
         }
 

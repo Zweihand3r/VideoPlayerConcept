@@ -10,9 +10,9 @@ Item {
 
     property int currentGenId: 0
 
-    readonly property int prepInterval: 125
-    readonly property int processInterval: 250
-    readonly property int completionInterval: 125
+    readonly property int prepInterval: 10
+    readonly property int processInterval: 50
+    readonly property int completionInterval: 50
 
     function generate(id, source) { prepGeneration(id, source) }
 
@@ -28,13 +28,19 @@ Item {
         }
 
         Video {
-            id: vidLoader; muted: true; anchors {
+            id: vidLoader; anchors {
                 fill: parent
             }
+
+            muted: true; fillMode: VideoOutput.PreserveAspectCrop
 
             Keys.onSpacePressed: togglePlayback()
             Keys.onLeftPressed: vidLoader.seek(vidLoader.position - 5000)
             Keys.onRightPressed: vidLoader.seek(vidLoader.position + 5000)
+
+            onBufferProgressChanged: {
+                if (bufferProgress === 1) processPrepTimer.start()
+            }
         }
 
         MouseArea {
@@ -71,8 +77,6 @@ Item {
 
         currentGenId = id
         vidLoader.source = source
-
-        processPrepTimer.start()
     }
 
     function startGeneration(id, source) {

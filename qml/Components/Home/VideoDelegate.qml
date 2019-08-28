@@ -22,7 +22,7 @@ MouseArea {
             horizontalCenter: parent.horizontalCenter
         }
 
-        Image { source: _thumbPath; fillMode: Image.Tile; anchors.fill: parent }
+        Image { source: _thumbPath; fillMode: Image.PreserveAspectCrop; anchors.fill: parent }
 
         Rectangle {
             color: Qt.rgba(0, 0, 0, 0.75)
@@ -91,9 +91,8 @@ MouseArea {
             width: 216; height: 100; color: "black"
 
             Video {
-                source: _vidPath; muted: true; loops: MediaPlayer.Infinite; anchors {
-                    fill: parent; margins: 0
-                }
+                source: _vidPath; muted: true; anchors { fill: parent; margins: 0 }
+                loops: MediaPlayer.Infinite; fillMode: VideoOutput.PreserveAspectCrop
 
                 Component.onCompleted: play()
             }

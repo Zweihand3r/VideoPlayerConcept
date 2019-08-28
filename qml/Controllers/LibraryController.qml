@@ -9,7 +9,7 @@ Item {
 
     objectName: "LibC"
 
-    property bool debugThumbnailProcessing: false
+    property bool debugThumbnailProcessing: true
 
     property int vidBatchAddIndex: 0
     property var vidBatchAddPaths: []
@@ -167,6 +167,6 @@ Item {
     function wipeLibrary() {
         dbc.drop("LibPaths")
         dbc.drop("Videos")
-        fm.deleteDirectory(fm.currentPath + thumbPath)
+        fm.deleteDirectory(fm.currentPath + thumbDirPath)
     }
 }

@@ -6,7 +6,9 @@ import '../Components/Shared'
 View {
     id: rootNb
     visible: true
-    resizable: false
+    resizable: false; anchors {
+        fill: parent
+    }
 
     property bool expanded: false
 
