@@ -46,5 +46,7 @@
         <file>qml/Components/History/VideoDelegate.qml</file>
         <file>qml/Components/Favorites/VideoDelegate.qml</file>
         <file>qml/Prototypes/WebPlayer.qml</file>
+        <file>qml/Views/MiniPlayback.qml</file>
+        <file>qml/Components/Playback/MiniSeekbar.qml</file>
     </qresource>
 </RCC>

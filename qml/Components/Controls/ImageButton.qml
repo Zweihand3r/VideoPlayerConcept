@@ -20,10 +20,15 @@ MouseArea {
     property alias tint: image.tint
     property alias fillMode: image.fillMode
 
+    property int imageHorizontalOffset: 0
+    property int imageVerticalOffset: 0
+
     Image {
         id: image
         tint: cons.color.lightGray_1; anchors {
             centerIn: parent
+            horizontalCenterOffset: imageHorizontalOffset
+            verticalCenterOffset: imageVerticalOffset
         }
     }
 

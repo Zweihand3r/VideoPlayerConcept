@@ -6,6 +6,9 @@ import '../Components/Playback'
 
 View {
     id: rootPb
+    objectName: "Playback"
+
+    property bool externalVideo: false
 
     property int currentVidId: -1
     property int currentViewId: -1
@@ -142,12 +145,16 @@ View {
         likeButton.visible = true
         likeButton.count = currentVid.likes
 
-        loadView(vid_id)
+        externalVideo = false
+
         sharedVidLoader(currentVid.path)
+        loadView(vid_id)
     }
 
     function loadExtVideo(url) {
         likeButton.visible = false
+        externalVideo = true
+
         sharedVidLoader(url)
     }
 

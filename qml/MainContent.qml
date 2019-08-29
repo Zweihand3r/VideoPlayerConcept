@@ -52,6 +52,8 @@ Item {
             Favorites { id: favorites }
             Library { id: library }
             Settings { id: settings }
+
+            MiniPlayback { id: miniPlayback }
         }
 
         Navigation { id: nav }

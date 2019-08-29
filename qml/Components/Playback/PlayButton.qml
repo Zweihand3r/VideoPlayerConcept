@@ -7,6 +7,8 @@ MouseArea {
     id: rootPb
     implicitWidth: 44
     implicitHeight: 44
+    hoverEnabled: true
+    cursorShape: Qt.PointingHandCursor
 
     property bool playActive: video.playbackState === MediaPlayer.PlayingState
 
