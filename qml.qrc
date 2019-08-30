@@ -48,5 +48,8 @@
         <file>qml/Prototypes/WebPlayer.qml</file>
         <file>qml/Views/MiniPlayback.qml</file>
         <file>qml/Components/Playback/MiniSeekbar.qml</file>
+        <file>qml/Controllers/VideoController.qml</file>
+        <file>qml/Components/Playback/PlaybackView.qml</file>
+        <file>qml/Components/Playback/BackButton.qml</file>
     </qresource>
 </RCC>

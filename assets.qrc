@@ -34,5 +34,6 @@
         <file>assets/icons/x48/cloud.png</file>
         <file>assets/icons/x24/arrow_back.png</file>
         <file>assets/icons/x24/close.png</file>
+        <file>assets/icons/x48/arrow_back_tail.png</file>
     </qresource>
 </RCC>

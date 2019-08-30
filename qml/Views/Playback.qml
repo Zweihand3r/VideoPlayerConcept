@@ -1,14 +1,13 @@
 import QtQuick 2.13
-import QtMultimedia 5.13
 
 import '../Components/Basic'
 import '../Components/Playback'
 
-View {
+PlaybackView {
     id: rootPb
     objectName: "Playback"
 
-    property bool externalVideo: false
+    property string currentVidName: "Video"
 
     property int currentVidId: -1
     property int currentViewId: -1
@@ -20,19 +19,17 @@ View {
             fill: parent; /*leftMargin: 20; topMargin: 20; rightMargin: 440; bottomMargin: 180*/
         }
 
-        Video {
-            id: video; anchors.fill: parent; focus: true
-
-            Keys.onSpacePressed: togglePlayPause()
-            Keys.onLeftPressed: replay()
-            Keys.onRightPressed: forward()
+        Item {
+            id: vidParent; anchors {
+                fill: parent
+            }
         }
 
         MouseArea {
             anchors.fill: parent; hoverEnabled: true
 
             onExited: hideControlPanel()
-            onClicked: togglePlayPause()
+            onClicked: vic.togglePlayPause()
             onMouseXChanged: showControlPanel(mouseY)
             onMouseYChanged: showControlPanel(mouseY)
 
@@ -50,8 +47,8 @@ View {
             }
 
             Item {
-                id: controlPanel; height: 64; opacity: 0; anchors {
-                    left: parent.left; right: parent.right; bottom: parent.bottom
+                id: controlPanel; opacity: 0; anchors {
+                    fill: parent
                 }
 
                 Rectangle {
@@ -66,46 +63,60 @@ View {
 
                 Behavior on opacity { OpacityAnimator { duration: 180 }}
 
-                Seekbar {
-                    id: seekbar; anchors {
-                        leftMargin: 20; rightMargin: 20; topMargin: -10
-                        left: parent.left; right: parent.right; top: parent.top
+
+                BackButton {
+                    id: backButton; anchors {
+                        leftMargin: 20; topMargin: 12
+                        left: parent.left; top: parent.top
                     }
                 }
 
-
-                /* --------------- LEFT CONTROLS ------------- */
-
-                PlayButton {
-                    id: playButton; anchors {
-                        left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: 20
+                Item {
+                    id: bottomPanel; height: 64; anchors {
+                        left: parent.left; right: parent.right; bottom: parent.bottom
                     }
-                }
 
-                VolumeButton {
-                    id: volumeButton; anchors {
-                        left: playButton.right; verticalCenter: parent.verticalCenter
+                    Seekbar {
+                        id: seekbar; anchors {
+                            leftMargin: 20; rightMargin: 20; topMargin: -10
+                            left: parent.left; right: parent.right; top: parent.top
+                        }
                     }
-                }
 
-                Text {
-                    id: durationText; font.pixelSize: 17; color: cons.color.lightGray_1; anchors {
-                        left: volumeButton.right; verticalCenter: parent.verticalCenter; leftMargin: 14
+
+                    /* --------------- LEFT CONTROLS ------------- */
+
+                    PlayButton {
+                        id: playButton; anchors {
+                            left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: 20
+                        }
                     }
-                }
 
-
-                /* -------------- RIGHT CONTROLS ------------- */
-
-                FullscreenButton {
-                    id: fullscreenButton; anchors {
-                        right: parent.right; verticalCenter: parent.verticalCenter; rightMargin: 20
+                    VolumeButton {
+                        id: volumeButton; anchors {
+                            left: playButton.right; verticalCenter: parent.verticalCenter
+                        }
                     }
-                }
 
-                LikeButton {
-                    id: likeButton; anchors {
-                        right: fullscreenButton.left; verticalCenter: parent.verticalCenter; rightMargin: 12
+                    Text {
+                        id: durationText; font.pixelSize: 17; color: cons.color.lightGray_1; anchors {
+                            left: volumeButton.right; verticalCenter: parent.verticalCenter; leftMargin: 14
+                        }
+                    }
+
+
+                    /* -------------- RIGHT CONTROLS ------------- */
+
+                    FullscreenButton {
+                        id: fullscreenButton; anchors {
+                            right: parent.right; verticalCenter: parent.verticalCenter; rightMargin: 20
+                        }
+                    }
+
+                    LikeButton {
+                        id: likeButton; anchors {
+                            right: fullscreenButton.left; verticalCenter: parent.verticalCenter; rightMargin: 12
+                        }
                     }
                 }
             }
@@ -126,91 +137,114 @@ View {
         }
     }
 
+    function loadVideo(vid_id) {
+        prepPlayback()
+
+        currentVidId = vid_id
+        currentVid = libc.videos[vid_id]
+        currentVidName = currentVid.name
+
+        likeButton.visible = true
+        likeButton.count = currentVid.likes
+
+        const watchedDuration = loadView(vid_id)
+        sharedVidLoader(currentVid.path, watchedDuration)
+    }
+
+    function loadExtVideo(url, name) {
+        prepPlayback()
+
+        currentVidId = -1
+        currentVid = {}
+        currentVidName = name
+
+        likeButton.visible = false
+        sharedVidLoader(url, 0)
+    }
+
+    function continueVideo() {
+        durationText.text = Qt.binding(function() {
+            return mac.msToTimeStr(vic.position) + " / " + mac.msToTimeStr(vic.duration)
+        })
+
+        vic.reparent(vidParent, false)
+        nav.setCurrentId(cons.nav.playback)
+    }
+
+
     /* -------------------- OVERRIDES -------------------- */
 
     function navigatedAway() {
-        if (video.playbackState === MediaPlayer.PlayingState) {
-            video.pause()
+        if (settings.enableMiniPlayer) {
+            miniPlayback.continueCurrentVideo()
+        } else {
+            vic.pauseIfPlaying()
         }
 
         updateView()
     }
 
+    function played() { animatePlaybackControls('qrc:/assets/icons/x48/play.png') }
+    function paused() { animatePlaybackControls('qrc:/assets/icons/x48/pause.png') }
+    function replayed() { animatePlaybackControls('qrc:/assets/icons/x48/replay_5.png') }
+    function forwarded() { animatePlaybackControls('qrc:/assets/icons/x48/forward_5.png') }
+
+
     /* -------------------- FUNCTIONS -------------------- */
 
-    function loadVideo(vid_id) {
-        currentVidId = vid_id
-        currentVid = libc.videos[vid_id]
+    function prepPlayback() {
+        navbar.currentItem.videoUnloaded(currentVidId)
 
-        likeButton.visible = true
-        likeButton.count = currentVid.likes
-
-        externalVideo = false
-
-        sharedVidLoader(currentVid.path)
-        loadView(vid_id)
+        if (miniPlayback.active && settings.enableMiniPlayer) {
+            updateView()
+            navbar.currentItem.videoUpdated(currentVidId, currentViewId)
+        }
     }
 
-    function loadExtVideo(url) {
-        likeButton.visible = false
-        externalVideo = true
+    function sharedVidLoader(path, watchedDuration) {
+        if (miniPlayback.active && settings.enableMiniPlayer) {
+            miniPlayback.loadVideo(path, watchedDuration)
+        } else {
+            vic.reparent(vidParent, false)
+            vic.load(path, watchedDuration)
 
-        sharedVidLoader(url)
+            durationText.text = Qt.binding(function() {
+                return mac.msToTimeStr(vic.position) + " / " + mac.msToTimeStr(vic.duration)
+            })
+
+            nav.setCurrentId(cons.nav.playback)
+            navbar.currentItem.videoLoaded(currentVidId)
+
+            mac.executeAfter(440, vic.play)
+        }
     }
 
     function loadView(vid_id) {
+        var watchedDuration = vic.position
         const view = usc.getUserView(vid_id)
 
         if (currentViewId !== view.id) {
             currentViewId = view.id
+            likeButton.checked = view.liked
 
             if ((currentVid.duration - view.duration) < 1000) {
-                video.seek(0)
-            } else if (view.duration > 0) video.seek(view.duration)
-
-            likeButton.checked = view.liked
+                watchedDuration = 0
+            } else { watchedDuration = view.duration }
 
             libc.updateGlobalViews(vid_id)
         }
-    }
 
-    function sharedVidLoader(path) {
-        video.source = path
-        video.volume = settings.volume
-
-        durationText.text = Qt.binding(function() {
-            return mac.msToTimeStr(video.position) + " / " + mac.msToTimeStr(video.duration)
-        })
-
-        nav.setCurrentId(cons.nav.playback)
-        mac.executeAfter(440, video.play)
+        return watchedDuration
     }
 
     function updateView() {
-        usc.updateUserView(currentViewId, video.position, likeButton.checked ? 1 : 0)
-    }
-
-    /* ---------------- PLAYBACK CONTROLS ---------------- */
-
-    function togglePlayPause() {
-        if (video.playbackState === MediaPlayer.PlayingState) {
-            video.pause()
-            animatePlaybackControls('qrc:/assets/icons/x48/pause.png')
-        } else {
-            video.play()
-            animatePlaybackControls('qrc:/assets/icons/x48/play.png')
+        if (currentVidId > -1) {
+            usc.updateUserView(currentViewId, vic.position, likeButton.checked ? 1 : 0)
         }
     }
 
-    function replay() {
-        video.seek(video.position - 5000)
-        animatePlaybackControls('qrc:/assets/icons/x48/replay_5.png')
-    }
 
-    function forward() {
-        video.seek(video.position + 5000)
-        animatePlaybackControls('qrc:/assets/icons/x48/forward_5.png')
-    }
+    /* ---------------- PLAYBACK CONTROLS ---------------- */
 
     function toggleFullscreen() {
         if (!fullscreenActive) {

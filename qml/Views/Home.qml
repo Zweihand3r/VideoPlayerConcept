@@ -26,7 +26,7 @@ View {
 
     ListModel {
         id: videoModel
-        /*ListElement { _id: ID; _vidPath: "PATH"; _thumbPath: 'PATH'; _name: "NAME"; _duration: "DUR INT"; _durationWatched: "DUR INT"; _durationStr: "DURATION; _details: "DETAILS" }*/
+        /*ListElement { _id: ID; _vidPath: "PATH"; _thumbPath: 'PATH'; _name: "NAME"; _isPlaying: false; _duration: "DUR INT"; _durationWatched: "DUR INT"; _durationStr: "DURATION; _details: "DETAILS" }*/
     }
 
     Timer {
@@ -39,6 +39,34 @@ View {
 
     function navigatedAway() {
         videoModel.clear()
+    }
+
+    function videoLoaded(vid_id) {
+        console.log("Home.qml: Video Loaded> " + vid_id)
+        if (visible) {
+            for (var index = 0; index < videoModel.count; index++) {
+                if (vid_id === videoModel.get(index)._id) {
+                    videoModel.setProperty(index, "_isPlaying", true)
+                    return
+                }
+            }
+        }
+    }
+
+    function videoUnloaded(vid_id) {
+        if (visible) {
+            for (var index = 0; index < videoModel.count; index++) {
+                if (vid_id === videoModel.get(index)._id) {
+                    videoModel.setProperty(index, "_isPlaying", false)
+                    return
+                }
+            }
+        }
+    }
+
+    function videoUpdated(vid_id, view_id) {
+        const view = usc.getUserViewById(view_id)
+        console.log("Home.qml: " + JSON.stringify(view))
     }
 
     function updateUI() {
@@ -55,7 +83,7 @@ View {
                 videoModel.append({
                                       "_id": id,
                                       "_name": video.name, "_details": getDetails(video), "_vidPath": video.path,
-                                      "_thumbPath": "file://" + fm.currentPath + libc.getItemThumbPath(id),
+                                      "_thumbPath": "file://" + fm.currentPath + libc.getItemThumbPath(id), "_isPlaying": false,
                                       "_duration": video.duration, "_durationStr": video.durationStr, "_durationWatched": durationWatched
                                   })
             }

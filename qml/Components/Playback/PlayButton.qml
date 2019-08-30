@@ -10,7 +10,7 @@ MouseArea {
     hoverEnabled: true
     cursorShape: Qt.PointingHandCursor
 
-    property bool playActive: video.playbackState === MediaPlayer.PlayingState
+    property bool playActive: vic.playbackState === MediaPlayer.PlayingState
 
     Image {
         anchors { fill: parent; margins: 10 }
@@ -21,7 +21,7 @@ MouseArea {
     }
 
     onClicked: {
-        if (playActive) video.pause()
-        else video.play()
+        if (playActive) vic.pause()
+        else vic.play()
     }
 }

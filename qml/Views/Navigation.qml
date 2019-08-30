@@ -7,7 +7,7 @@ import '../Components/Shared'
 import '../Components/Controls'
 
 View {
-    id: rootNav; visible: true
+    id: rootNav; objectName: "Navigation"; visible: true
     width: parent.width; height: 64; resizable: false; anchors {
         top: parent.top; topMargin: fullscreenActive ? -height : 0
     }
@@ -61,6 +61,10 @@ View {
 
             updateTheme(settings.darkTheme)
         }
+    }
+
+    function back() {
+        setCurrentId(navbar.currentNavId)
     }
 
     /* ---------------- OVERRIDES ----------------- */
@@ -125,7 +129,10 @@ View {
     FileDialog {
         id: fileDialog
         nameFilters: ["MP4 (*.mp4)", "AVI (*.avi)"]
-        onAccepted: playback.loadExtVideo(fileDialog.fileUrl)
+        onAccepted: {
+            const fileInfo = fm.getFileInfo(fileDialog.fileUrl)
+            playback.loadExtVideo(fileDialog.fileUrl, fileInfo.baseName)
+        }
     }
 
     View {
@@ -154,7 +161,7 @@ View {
                 }
 
                 Keys.onReturnPressed: {
-                    playback.loadExtVideo(text.trim())
+                    playback.loadExtVideo(text.trim(), "WEB VIDEO")
                     selectUrlLt.dismiss()
                 }
             }

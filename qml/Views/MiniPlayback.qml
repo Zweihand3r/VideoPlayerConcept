@@ -1,5 +1,4 @@
 import QtQuick 2.13
-import QtMultimedia 5.13
 import QtGraphicalEffects 1.13
 
 import '../Components/QML'
@@ -7,7 +6,7 @@ import '../Components/Basic'
 import '../Components/Controls'
 import '../Components/Playback'
 
-View {
+PlaybackView {
     id: rootMPb
     resizable: false
     width: 380; height: 264
@@ -36,19 +35,27 @@ View {
             color: settings.darkTheme ? cons.color.darkGray_1 : cons.color.lightGray_3
         }
 
-        Video {
-            id: video
-            anchors { fill: parent }
-            fillMode: VideoOutput.PreserveAspectCrop
+        Item {
+            id: vidParent; anchors {
+                fill: parent
+            }
         }
 
         MouseArea {
-            anchors.fill: video; hoverEnabled: true
+            anchors.fill: vidParent; hoverEnabled: true
+
+            onClicked: backToPlayback()
 
             Item {
                 anchors.fill: parent; opacity: parent.containsMouse ? 1 : 0
                 Rectangle { anchors.fill: parent; color: "black"; opacity: 0.65 }
                 Behavior on opacity { OpacityAnimator { duration: 120; easing.type: Easing.InQuad }}
+
+                Text {
+                    id: durationText; font.pixelSize: 12; color: cons.color.lightGray_1; anchors {
+                        left: parent.left; bottom: parent.bottom; margins: 8
+                    }
+                }
 
                 PlayButton {
                     width: 54; height: 54; anchors {
@@ -78,7 +85,7 @@ View {
 
         MiniSeekbar {
             anchors {
-                left: video.left; right: video.right; bottom: video.bottom
+                left: vidParent.left; right: vidParent.right; bottom: vidParent.bottom
             }
         }
     }
@@ -92,7 +99,7 @@ View {
         Rectangle { anchors.fill: parent; color: bg.color; visible: !expanded }
 
         Item {
-            width: 32; height: 32; anchors {
+            width: 36; height: 36; anchors {
                 left: parent.left; verticalCenter: parent.verticalCenter; leftMargin: 2
             }
 
@@ -111,7 +118,7 @@ View {
             }
 
             anchors {
-                leftMargin: expanded ? 12 : 34
+                leftMargin: expanded ? 12 : 36
                 left: parent.left; verticalCenter: parent.verticalCenter
             }
 
@@ -143,21 +150,41 @@ View {
     }
 
     function dismiss() {
-        if (video.playbackState === MediaPlayer.PlayingState) {
-            video.pause()
-        }
+        vic.pauseIfPlaying()
+        playback.updateView()
 
         rootMPb.visible = false
     }
 
-    function loadCurrentVideo() {
-        const currentVid = playback.currentVid
+    function continueCurrentVideo() {
+        vic.reparent(vidParent, true)
 
-        video.source = currentVid.path
-        video.play()
+        vidNameText.text = playback.currentVidName
+        durationText.text = Qt.binding(function() {
+            return mac.msToTimeStr(vic.position) + " / " + mac.msToTimeStr(vic.duration)
+        })
 
-        vidNameText.text = currentVid.name
+        if (!expanded) expanded = true
+        present()
+    }
+
+    function loadVideo(path, watchedDuration) {
+        vic.reparent(vidParent, true)
+        vic.load(path, watchedDuration)
+
+        vidNameText.text = playback.currentVidName
+        durationText.text = Qt.binding(function() {
+            return mac.msToTimeStr(vic.position) + " / " + mac.msToTimeStr(vic.duration)
+        })
 
         present()
+        mac.executeAfter(440, vic.play)
+    }
+
+    function backToPlayback() {
+        playback.updateView()
+        rootMPb.visible = false
+
+        playback.continueVideo()
     }
 }

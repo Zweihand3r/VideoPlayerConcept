@@ -13,6 +13,10 @@ View {
     property bool expanded: false
 
     property int currentIndex: 0
+    property string currentNavId: cons.nav.home
+    property string currentNavName: "Home"
+
+    property View currentItem: nav.map[currentNavId]
 
     property color color_nonHighlight: cons.color.lightGray_3
 
@@ -92,6 +96,9 @@ View {
 
                 onClicked: {
                     currentIndex = index
+                    currentNavId = _navId
+                    currentNavName = _text
+
                     nav.setCurrentId(_navId)
                     dismiss()
                 }

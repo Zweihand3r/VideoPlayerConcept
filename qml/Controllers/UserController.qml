@@ -18,6 +18,10 @@ Item {
         fetchUser(currentUserId)
     }
 
+    function getUserViewById(view_id) {
+        return dbc.getViewById(view_id)
+    }
+
     function getUserView(vid_id) {
         var view = dbc.getView(currentUserId, vid_id)
         if (mac.checkIfEmpty(view)) {

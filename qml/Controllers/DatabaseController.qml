@@ -101,6 +101,15 @@ Item {
         return views
     }
 
+    function getViewById(id) {
+        var view = {}
+        db.transaction(function(tx) {
+            const res = tx.executeSql('SELECT * FROM Views WHERE id=?', [id])
+            view = res.rows.item(0)
+        })
+        return view
+    }
+
     function getView(uid, vid) {
         var view = {}
         db.transaction(function(tx) {

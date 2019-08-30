@@ -43,6 +43,13 @@ Item {
     function finaliseFileSelection(paths) {}
     function finaliseFolderSelection(path) {}
 
+    /* Called when a video is loaded/unloaded */
+    function videoLoaded(vid_id) {}
+    function videoUnloaded(vid_id) {}
+
+    /* Called when a video (views) is updated */
+    function videoUpdated(vid_id, view_id) {}
+
 
     /* ---------------- NAV ---------------- */
 
@@ -50,4 +57,7 @@ Item {
 
     function present() { visible = true }
     function dismiss() { visible = false }
+
+
+    /* ------------- FUNCTIONS ------------- */
 }

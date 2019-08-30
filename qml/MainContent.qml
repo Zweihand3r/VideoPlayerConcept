@@ -32,6 +32,7 @@ Item {
     DatabaseController { id: dbc }
     LibraryController { id: libc }
     UserController { id: usc }
+    VideoController { id: vic }
 
 
     /* ------------- DRAWABLES ------------- */

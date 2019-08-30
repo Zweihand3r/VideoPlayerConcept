@@ -49,6 +49,19 @@ MouseArea {
                 width: _durationWatched / _duration * parent.width
             }
         }
+
+        Rectangle {
+            color: Qt.rgba(0, 0, 0, 0.85)
+            opacity: _isPlaying ? 1 : 0; anchors { fill: parent }
+            Behavior on opacity { OpacityAnimator { duration: 120 }}
+
+            Text {
+                anchors { centerIn: parent }
+                text: "NOW PLAYING"; color: cons.color.lightGray_1; font {
+                    pixelSize: 14; family: "Open Sans"
+                }
+            }
+        }
     }
 
     Loader {
@@ -117,13 +130,17 @@ MouseArea {
     }
 
     function triggerPreview() {
-        previewDelayTimer.start()
+        if (!_isPlaying) {
+            previewDelayTimer.start()
+        }
     }
 
     function exitPreview() {
-        if (previewDelayTimer.running) {
-            previewDelayTimer.stop()
-        } else finishPreviewAnim.start()
+        if (!_isPlaying) {
+            if (previewDelayTimer.running) {
+                previewDelayTimer.stop()
+            } else finishPreviewAnim.start()
+        }
     }
 
     function exitCompleteHandler() {

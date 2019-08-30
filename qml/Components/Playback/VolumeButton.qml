@@ -24,8 +24,8 @@ MouseArea {
                 horizontalCenterOffset: {
                     if (muted) return 3
                     else {
-                        if (video.volume === 0) return -3
-                        else if (video.volume < 0.5) return 0
+                        if (vic.volume === 0) return -3
+                        else if (vic.volume < 0.5) return 0
                         else return 3
                     }
                 }
@@ -34,8 +34,8 @@ MouseArea {
             tint: cons.color.lightGray_1; source: {
                 if (muted) return 'qrc:/assets/icons/x48/volume_mute.png'
                 else {
-                    if (video.volume === 0) return 'qrc:/assets/icons/x48/volume_0.png'
-                    else if (video.volume < 0.5) return 'qrc:/assets/icons/x48/volume_1.png'
+                    if (vic.volume === 0) return 'qrc:/assets/icons/x48/volume_0.png'
+                    else if (vic.volume < 0.5) return 'qrc:/assets/icons/x48/volume_1.png'
                     else return 'qrc:/assets/icons/x48/volume_2.png'
                 }
             }
@@ -52,7 +52,7 @@ MouseArea {
         Behavior on width { NumberAnimation { duration: 180; easing.type: Easing.OutQuad }}
 
         Slider {
-            id: volumeSlider; value: video.volume; anchors {
+            id: volumeSlider; value: vic.volume; anchors {
                 verticalCenter: parent.verticalCenter
             }
 
@@ -80,18 +80,18 @@ MouseArea {
 
     function setVolume(volume) {
         if (muted) muted = false
-        video.volume = volume
+        vic.volume = volume
         settings.volume = volume
     }
 
     function toggleMute() {
         if (!muted) {
             muted_volume = volumeSlider.value
-            video.volume = 0
 
+            vic.volume = 0
             muted = true
         } else {
-            video.volume = muted_volume
+            vic.volume = muted_volume
             muted = false
         }
     }

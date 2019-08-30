@@ -53,6 +53,17 @@ View {
 
             Switch {
                 Layout.fillWidth: true
+                text: "Enable Mini Player"; checked: enableMiniPlayer; onClicked: {
+                    enableMiniPlayer = checked
+
+                    if (!enableMiniPlayer && miniPlayback.active) {
+                        miniPlayback.dismiss()
+                    }
+                }
+            }
+
+            Switch {
+                Layout.fillWidth: true
                 text: "Enable Console"; checked: enableConsole; onClicked: {
                     enableConsole = checked
                 }
@@ -73,6 +84,8 @@ View {
     /* ------------------- USER SETTINGS ------------------- */
 
     property bool darkTheme: true
+    property bool enableMiniPlayer: true
+
     property bool enableConsole: true
 
     property real volume: 1
@@ -92,6 +105,8 @@ View {
         id: user_settings
 
         property alias darkTheme: rootSet.darkTheme
+        property alias enableMiniPlayer: rootSet.enableMiniPlayer
+
         property alias enableConsole: rootSet.enableConsole
 
         property alias volume: rootSet.volume

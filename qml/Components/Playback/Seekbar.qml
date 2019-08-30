@@ -10,9 +10,9 @@ MouseArea {
 
     Slider {
         id: seekSlider; padding: 0
-        from: 0; to: video.duration; value: video.position
+        from: 0; to: vic.duration; value: vic.position
 
-        onMoved: video.seek(value)
+        onMoved: vic.seek(value)
 
         background: Item {
             x: seekSlider.leftPadding; y: seekSlider.topPadding
