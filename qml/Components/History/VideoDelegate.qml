@@ -1,6 +1,8 @@
 import QtQuick 2.13
 import QtQuick.Layouts 1.13
 
+import '../Shared'
+
 MouseArea {
     id: rootVD
     width: 480; height: 80
@@ -40,6 +42,8 @@ MouseArea {
             }
         }
     }
+
+    NowPlaying { anchors.fill: thumb }
 
     ColumnLayout {
         spacing: 0; anchors {

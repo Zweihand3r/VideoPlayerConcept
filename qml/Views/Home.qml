@@ -42,26 +42,11 @@ View {
     }
 
     function videoLoaded(vid_id) {
-        console.log("Home.qml: Video Loaded> " + vid_id)
-        if (visible) {
-            for (var index = 0; index < videoModel.count; index++) {
-                if (vid_id === videoModel.get(index)._id) {
-                    videoModel.setProperty(index, "_isPlaying", true)
-                    return
-                }
-            }
-        }
+        changeIsPlaying(vid_id, true)
     }
 
     function videoUnloaded(vid_id) {
-        if (visible) {
-            for (var index = 0; index < videoModel.count; index++) {
-                if (vid_id === videoModel.get(index)._id) {
-                    videoModel.setProperty(index, "_isPlaying", false)
-                    return
-                }
-            }
-        }
+        changeIsPlaying(vid_id, false)
     }
 
     function videoUpdated(vid_id, view_id) {
@@ -80,11 +65,12 @@ View {
             for (var id in libc.videos) {
                 const video = libc.videos[id]
                 const durationWatched = durMap[id] ? durMap[id] : -1
+
                 videoModel.append({
                                       "_id": id,
                                       "_name": video.name, "_details": getDetails(video), "_vidPath": video.path,
-                                      "_thumbPath": "file://" + fm.currentPath + libc.getItemThumbPath(id), "_isPlaying": false,
-                                      "_duration": video.duration, "_durationStr": video.durationStr, "_durationWatched": durationWatched
+                                      "_duration": video.duration, "_durationStr": video.durationStr, "_durationWatched": durationWatched,
+                                      "_thumbPath": "file://" + fm.currentPath + libc.getItemThumbPath(id), "_isPlaying": id === playback.currentVidId.toString()
                                   })
             }
         }
@@ -95,5 +81,16 @@ View {
         const dateStr = mac.getDateElapsedSince(video.dateAdded)
 
         return viewStr + " views • " + dateStr
+    }
+
+    function changeIsPlaying(vid_id, isPlaying) {
+        if (visible && vid_id > -1) {
+            for (var index = 0; index < videoModel.count; index++) {
+                if (vid_id.toString() === videoModel.get(index)._id) {
+                    videoModel.setProperty(index, "_isPlaying", isPlaying)
+                    return
+                }
+            }
+        }
     }
 }

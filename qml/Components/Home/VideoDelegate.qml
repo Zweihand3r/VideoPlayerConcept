@@ -1,11 +1,14 @@
 import QtQuick 2.13
 import QtMultimedia 5.13
 
+import '../Shared'
+
 /* Cell Height: 220 */
 
 MouseArea {
     id: rootVD
     width: 220
+    enabled: !isPlaying
     height: detailText.y + detailText.height
     hoverEnabled: true; cursorShape: Qt.PointingHandCursor
 
@@ -16,6 +19,8 @@ MouseArea {
     /*
      * _thumbPath, _name, _details
      */
+
+    property bool isPlaying: _isPlaying
 
     Rectangle {
         id: vid_bg; width: 216; height: 110; color: "black"; anchors {
@@ -49,19 +54,6 @@ MouseArea {
                 width: _durationWatched / _duration * parent.width
             }
         }
-
-        Rectangle {
-            color: Qt.rgba(0, 0, 0, 0.85)
-            opacity: _isPlaying ? 1 : 0; anchors { fill: parent }
-            Behavior on opacity { OpacityAnimator { duration: 120 }}
-
-            Text {
-                anchors { centerIn: parent }
-                text: "NOW PLAYING"; color: cons.color.lightGray_1; font {
-                    pixelSize: 14; family: "Open Sans"
-                }
-            }
-        }
     }
 
     Loader {
@@ -73,6 +65,8 @@ MouseArea {
             if (status === Loader.Ready) startPreviewAnim.start()
         }
     }
+
+    NowPlaying { anchors.fill: vid_bg }
 
     Text {
         id: nameText; text: _name; color: color_primary
@@ -129,18 +123,18 @@ MouseArea {
         }
     }
 
+    onIsPlayingChanged: {
+        if (isPlaying) exitPreview()
+    }
+
     function triggerPreview() {
-        if (!_isPlaying) {
-            previewDelayTimer.start()
-        }
+        previewDelayTimer.start()
     }
 
     function exitPreview() {
-        if (!_isPlaying) {
-            if (previewDelayTimer.running) {
-                previewDelayTimer.stop()
-            } else finishPreviewAnim.start()
-        }
+        if (previewDelayTimer.running) {
+            previewDelayTimer.stop()
+        } else finishPreviewAnim.start()
     }
 
     function exitCompleteHandler() {

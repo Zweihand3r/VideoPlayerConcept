@@ -12,7 +12,13 @@ RowLayout {
         hoverEnabled: true; cursorShape: Qt.PointingHandCursor
         Layout.preferredWidth: parent.height; Layout.preferredHeight: width
 
-        onClicked: nav.back()
+        onClicked: {
+            if (fullscreenActive) {
+                toggleFullscreen()
+            }
+
+            nav.back()
+        }
 
         Image {
             width: 40; height: 40

@@ -53,11 +53,19 @@ View {
 
     ListModel {
         id: historyModel
-        /*ListElement { _id: "ID"; _thumbPath: "PATH"; _name: "NAME"; _duration: "DUR INT"; _durationWatched: "DUR INT"; _duationStr: "DURATION"; _details: "DETAILS" }*/
+        /*ListElement { _id: "ID"; _thumbPath: "PATH"; _name: "NAME"; _isPlaying: false; _duration: "DUR INT"; _durationWatched: "DUR INT"; _duationStr: "DURATION"; _details: "DETAILS" }*/
     }
 
     function navigatedAway() {
         historyModel.clear()
+    }
+
+    function videoLoaded(vid_id) {
+        changeIsPlaying(vid_id, true)
+    }
+
+    function videoUnloaded(vid_id) {
+        changeIsPlaying(vid_id, false)
     }
 
     function updateUI() {
@@ -67,8 +75,8 @@ View {
             const video = libc.videos[view.vid]
             historyModel.append({
                                     "_id": view.vid, "_name": video.name, "_details": getDetails(view),
-                                    "_thumbPath": "file://" + fm.currentPath + libc.getItemThumbPath(view.vid),
-                                    "_duration": video.duration, "_durationStr": video.durationStr, "_durationWatched": view.duration
+                                    "_duration": video.duration, "_durationStr": video.durationStr, "_durationWatched": view.duration,
+                                    "_thumbPath": "file://" + fm.currentPath + libc.getItemThumbPath(view.vid), "_isPlaying": view.vid === playback.currentVidId
                                 })
         })
     }
@@ -84,5 +92,16 @@ View {
     function getDetails(view) {
         const timeStr = mac.getDateElapsedSince(view.lastWatched)
         return "Watched " + timeStr
+    }
+
+    function changeIsPlaying(vid_id, isPlaying) {
+        if (visible && vid_id > -1) {
+            for (var index = 0; index < historyModel.count; index++) {
+                if (vid_id === historyModel.get(index)._id) {
+                    historyModel.setProperty(index, "_isPlaying", isPlaying)
+                    return
+                }
+            }
+        }
     }
 }

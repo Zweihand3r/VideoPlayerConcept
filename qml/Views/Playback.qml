@@ -213,10 +213,10 @@ PlaybackView {
             })
 
             nav.setCurrentId(cons.nav.playback)
-            navbar.currentItem.videoLoaded(currentVidId)
-
             mac.executeAfter(440, vic.play)
         }
+
+        navbar.currentItem.videoLoaded(currentVidId)
     }
 
     function loadView(vid_id) {
@@ -257,7 +257,7 @@ PlaybackView {
     }
 
     function showControlPanel(mouseY) {
-        if (mouseY < controlPanel.y - 10) {
+        if (mouseY < bottomPanel.y - 10) {
             if (hideCtrlPanelTimer.running) {
                 hideCtrlPanelTimer.restart()
             } else {

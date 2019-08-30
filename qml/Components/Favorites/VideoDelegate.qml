@@ -1,5 +1,7 @@
 import QtQuick 2.13
 
+import '../Shared'
+
 MouseArea {
     id: rootVD
     width: 480; height: 72
@@ -32,6 +34,8 @@ MouseArea {
                 }
             }
         }
+
+        NowPlaying { anchors.fill: thumb }
 
         Text {
             id: nameText; text: _name; color: color_primary; font {

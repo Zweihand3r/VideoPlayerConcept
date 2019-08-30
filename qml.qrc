@@ -51,5 +51,6 @@
         <file>qml/Controllers/VideoController.qml</file>
         <file>qml/Components/Playback/PlaybackView.qml</file>
         <file>qml/Components/Playback/BackButton.qml</file>
+        <file>qml/Components/Shared/NowPlaying.qml</file>
     </qresource>
 </RCC>

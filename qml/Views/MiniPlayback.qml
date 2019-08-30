@@ -153,6 +153,7 @@ PlaybackView {
         vic.pauseIfPlaying()
         playback.updateView()
 
+        nav.currentItem.videoUnloaded(playback.currentVidId)
         rootMPb.visible = false
     }
 
