@@ -70,7 +70,7 @@ View {
                                       "_id": id,
                                       "_name": video.name, "_details": getDetails(video), "_vidPath": video.path,
                                       "_duration": video.duration, "_durationStr": video.durationStr, "_durationWatched": durationWatched,
-                                      "_thumbPath": "file://" + fm.currentPath + libc.getItemThumbPath(id), "_isPlaying": id === playback.currentVidId.toString()
+                                      "_thumbPath": "file://" + fm.currentPath + libc.getItemThumbPath(id), "_isPlaying": id === playback.currentVidId.toString() && miniPlayback.active
                                   })
             }
         }

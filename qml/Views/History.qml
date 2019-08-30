@@ -76,7 +76,7 @@ View {
             historyModel.append({
                                     "_id": view.vid, "_name": video.name, "_details": getDetails(view),
                                     "_duration": video.duration, "_durationStr": video.durationStr, "_durationWatched": view.duration,
-                                    "_thumbPath": "file://" + fm.currentPath + libc.getItemThumbPath(view.vid), "_isPlaying": view.vid === playback.currentVidId
+                                    "_thumbPath": "file://" + fm.currentPath + libc.getItemThumbPath(view.vid), "_isPlaying": view.vid === playback.currentVidId && miniPlayback.active
                                 })
         })
     }

@@ -9,7 +9,7 @@ Item {
 
     objectName: "LibC"
 
-    property bool debugThumbnailProcessing: true
+    property bool debugThumbnailProcessing: false
 
     property int vidBatchAddIndex: 0
     property var vidBatchAddPaths: []

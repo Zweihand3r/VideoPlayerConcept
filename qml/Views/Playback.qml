@@ -113,9 +113,15 @@ PlaybackView {
                         }
                     }
 
+                    MiniPlayerButton {
+                        id: miniPlaybackButton; anchors {
+                            right: fullscreenButton.left; verticalCenter: parent.verticalCenter; rightMargin: 10
+                        }
+                    }
+
                     LikeButton {
                         id: likeButton; anchors {
-                            right: fullscreenButton.left; verticalCenter: parent.verticalCenter; rightMargin: 12
+                            right: miniPlaybackButton.left; verticalCenter: parent.verticalCenter; rightMargin: 14
                         }
                     }
                 }
