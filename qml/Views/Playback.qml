@@ -114,14 +114,15 @@ PlaybackView {
                     }
 
                     MiniPlayerButton {
-                        id: miniPlaybackButton; anchors {
+                        id: miniPlaybackButton; visible: settings.enableMiniPlayer; anchors {
                             right: fullscreenButton.left; verticalCenter: parent.verticalCenter; rightMargin: 10
                         }
                     }
 
                     LikeButton {
                         id: likeButton; anchors {
-                            right: miniPlaybackButton.left; verticalCenter: parent.verticalCenter; rightMargin: 14
+                            verticalCenter: parent.verticalCenter; rightMargin: 14
+                            right: settings.enableMiniPlayer ? miniPlaybackButton.left : fullscreenButton.left
                         }
                     }
                 }

@@ -16,4 +16,6 @@ MouseArea {
         tint: cons.color.lightGray_1
         source: 'qrc:/assets/icons/x48/picture_in_picture.png'
     }
+
+    onClicked: nav.back()
 }

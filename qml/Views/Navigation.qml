@@ -106,7 +106,7 @@ View {
 
     ImageButton {
         id: addVidButton; imageWidth: 32; imageHeight: 32
-        source: 'qrc:/assets/icons/x48/folder.png'; tint: color_secondary; anchors {
+        source: 'qrc:/assets/icons/x48/folder.png'; tint: color_primary; anchors {
             right: parent.right; verticalCenter: parent.verticalCenter; rightMargin: 14
         }
 
@@ -115,7 +115,7 @@ View {
 
     ImageButton {
         id: addCloudVidButton; imageWidth: 32; imageHeight: 32
-        source: 'qrc:/assets/icons/x48/cloud.png'; tint: color_secondary; anchors {
+        source: 'qrc:/assets/icons/x48/cloud.png'; tint: color_primary; anchors {
             right: addVidButton.left; verticalCenter: parent.verticalCenter; rightMargin: 6
         }
 

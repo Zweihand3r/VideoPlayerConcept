@@ -80,6 +80,15 @@ PlaybackView {
 
                     onClicked: expanded = false
                 }
+
+                ImageButton {
+                    width: 32; height: 32; imageWidth: 24; imageHeight: 24
+                    source: 'qrc:/assets/icons/x48/full_player.png'; anchors {
+                        right: parent.right; bottom: parent.bottom; margins: 2
+                    }
+
+                    onClicked: backToPlayback()
+                }
             }
         }
 
