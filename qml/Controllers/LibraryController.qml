@@ -28,6 +28,7 @@ Item {
         id: thumbGen
 
         onCompleted: vidBatchAddLoop()
+        onErrorEncountered: vidBatchAddLoop(errorStr, currentGenId)
         onDurationSet: setDuration(id, duration)
     }
 
@@ -42,14 +43,33 @@ Item {
     }
 
     function addNewVidPaths(paths) {
+        var addPaths = []
         paths.forEach(function(path) {
-            addNewLibPath(path, false)
+            if (checkDuplicateFilePath(path)) {
+                console.log("LibraryController.qml: Video at path \'" + path + "\' already exists in library")
+            } else addPaths.push(path)
         })
 
-        beginVidBatchAdd(paths)
+        if (addPaths.length > 0) {
+            addPaths.forEach(function(path) {
+                addNewLibPath(path, false)
+            })
+
+            beginVidBatchAdd(addPaths)
+        }
     }
 
     function addNewDirPath(path) {
+        for (var index = 0; index < libPaths.length; index++) {
+            const libPath = libPaths[index].path
+            const addPath = formatPath(path)
+
+            if (addPath.indexOf(libPath) > -1) {
+                console.log("LibraryController.qml: Contents of directory \'" + addPath + "\' if any already exists in library")
+                return
+            }
+        }
+
         addNewLibPath(path, true)
 
         const vidPaths = fm.getFilePathsInDirectory(formatPath(path), ["*.mp4"])
@@ -80,9 +100,24 @@ Item {
 
     /* ------------------- FUNCTIONS ------------------ */
 
+    function checkDuplicateFilePath(path) {
+        for (const key in videos) {
+            if (path === videos[key].path) return true
+        }
+
+        return false
+    }
+
     function beginVidBatchAdd(paths) {
         vidBatchAddIndex = 0
-        vidBatchAddPaths = paths
+        vidBatchAddPaths = []
+
+        paths.forEach(function(path) {
+            if (checkDuplicateFilePath(path)) {
+                console.log("LibraryController.qml: Video at path " + path + " already exists in library")
+            } else vidBatchAddPaths.push(path)
+        })
+
         vidBatchAddLoop()
 
         if (debugThumbnailProcessing) {
@@ -90,7 +125,14 @@ Item {
         } else loadProg.start(paths.length)
     }
 
-    function vidBatchAddLoop() {
+    function vidBatchAddLoop(errorStr, id) {
+        if (errorStr !== undefined) {
+            console.log("LibraryController.qml: Could not add video at path " + videos[id].path + ": " + errorStr)
+
+            dbc.deleteVideo(id)
+            delete videos[id]
+        }
+
         if (vidBatchAddIndex < vidBatchAddPaths.length) {
             addNewVideo(vidBatchAddPaths[vidBatchAddIndex++])
             loadProg.incrementProgress()
@@ -99,6 +141,8 @@ Item {
 
             if (!debugThumbnailProcessing) {
                 loadProg.incrementProgress()
+                removeDuplicateLibPaths()
+
                 mac.executeAfter(500, loadProg.dismiss)
             } else mac.setDrawablesVisibility(true)
         }
@@ -111,6 +155,8 @@ Item {
 
         thumbGen.generate(id, path)
         videos[id] = { "path": path, "name": fileInfo.baseName, "views": 0, "likes": 0, "dateAdded": now }
+
+        console.log("LibraryController.qml: Adding video: " + JSON.stringify(videos[id]))
     }
 
     function initialiseLibPaths() {
@@ -138,6 +184,24 @@ Item {
         for (var id in videos) {
             console.log(id + ": " + JSON.stringify(videos[id]))
         }
+    }
+
+    function removeDuplicateLibPaths() {
+        /* Need to write better function for this */
+
+        /*libPaths.forEach(function(libPath) {
+            if (!libPath.dirFlag) {
+                for (var key in videos) {
+                    if ("file://" + libPath.path === videos[key].path) {
+                        console.log("LibraryController.qml: found duplicate: " + libPath.path)
+                        dbc.deleteLibPath(libPath.path)
+                    }
+                }
+            }
+        })
+
+        library.clearLibPaths()
+        initialiseLibPaths()*/
     }
 
 

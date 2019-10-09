@@ -167,10 +167,4 @@ View {
             }
         }
     }
-
-    /*
-     - SOME YOUTUBE DOWNLOAD LINKS -
-     https://r5---sn-a5meknsd.googlevideo.com/videoplayback?expire=1566923796&ei=swdlXcHTOcPKkgafqq6ACQ&ip=69.147.248.110&id=o-AILbSpcLmfX8HYoWXkZH3kfvZg0tSAQYHa2mvqgrUJfp&itag=18&source=youtube&requiressl=yes&mm=31%2C29&mn=sn-a5meknsd%2Csn-a5msen7s&ms=au%2Crdu&mv=m&mvi=4&pl=23&initcwndbps=4001250&mime=video%2Fmp4&gir=yes&clen=12645047&ratebypass=yes&dur=276.851&lmt=1538599572351131&mt=1566902110&fvip=5&c=WEB&txp=5531432&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cmime%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=ALgxI2wwRAIgdLYhO_5356KScyBltU8U1F6mNcsYbYnoct0LhuxRa9sCIGu1TodpDwZMuZqQsYcqIbiwENQOCYX2e8rF7-nIyhAq&lsparams=mm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AHylml4wRAIgGj1mtwcFk3pD6WxZ4gCk4h766olbfC6tT8Ov2nUqi-UCIFe7PR-1Rz1zBb4KtDDr5JnLW4ZxHoW1XX_9JK1TJB9Y&video_id=2_uDzzOb5po&title=Viva+La+Vida+-+Coldplay+%28Cover%29+by+Alice+Kristiansen
-     https://r2---sn-a5ms7n7l.googlevideo.com/videoplayback?expire=1566922691&ei=YwNlXamFK47Xkgafya2ICA&ip=69.147.248.136&id=o-AC7LGC-qaZvzPyYeWN4pJATuE8Xlc-G4n0fakORWEK6J&itag=18&source=youtube&requiressl=yes&mm=31%2C29&mn=sn-a5ms7n7l%2Csn-a5mlrn7d&ms=au%2Crdu&mv=m&mvi=1&pl=23&initcwndbps=4001250&mime=video%2Fmp4&gir=yes&clen=243405510&ratebypass=yes&dur=4463.455&lmt=1540523786028655&mt=1566901074&fvip=2&c=WEB&txp=5531432&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cmime%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&lsparams=mm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpl%2Cinitcwndbps&lsig=AHylml4wRQIgU5qMGGyj8a2T6RSPrULLFK8dyczD0npjw2HKt4yeP6kCIQCv7-2Na_Hcyi7ebwVkMQGRXXi7GI-K6QdsHUM2kw0lyg%3D%3D&sig=ALgxI2wwRgIhAM4yemOaIeqMoOlgxfSrz70QZuH1PBfhJXA2cw2q4lHJAiEAzWs1WNkVcf08jCGWzvmzAqB4CVxYkATQZlHU_xqkVqo%3D&video_id=N2mVfpDHr9k&title=%27Peaceful+Solitude%27+Mix
-     */
 }

@@ -18,6 +18,7 @@ Item {
 
     signal started()
     signal completed()
+    signal errorEncountered(string errorStr)
 
     signal durationSet(string id, int duration)
 
@@ -40,6 +41,23 @@ Item {
 
             onBufferProgressChanged: {
                 if (bufferProgress === 1) processPrepTimer.start()
+            }
+
+            onErrorChanged: {
+                var errorStr = ""
+
+                switch (error) {
+                case MediaPlayer.NoError: errorStr = "No Error"; break
+                case MediaPlayer.ResourceError: errorStr = "Error allocating resourses"; break
+                case MediaPlayer.FormatError: errorStr = "Invalid file format"; break
+                case MediaPlayer.NetworkError: errorStr = "Network error"; break
+                case MediaPlayer.AccessDenied: errorStr = "Insufficient permissions"; break
+                case MediaPlayer.ServiceMissing: errorStr = "Video cannot be instantiated"; break
+                }
+
+                if (error > 0) {
+                    rootTGen.errorEncountered(errorStr)
+                }
             }
         }
 
@@ -79,7 +97,7 @@ Item {
         vidLoader.source = source
     }
 
-    function startGeneration(id, source) {
+    function startGeneration() {
         const duration = vidLoader.duration
         rootTGen.durationSet(currentGenId, duration)
 

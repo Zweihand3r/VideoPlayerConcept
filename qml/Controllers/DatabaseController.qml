@@ -42,6 +42,12 @@ Item {
         })
     }
 
+    function deleteLibPath(path) {
+        db.transaction(function(tx) {
+            tx.executeSql('DELETE FROM LibPaths WHERE path=?', [path])
+        })
+    }
+
     function addVideo(path, name, dateAdded) {
         var insertId
         db.transaction(function(tx) {
@@ -49,6 +55,12 @@ Item {
             insertId = res.insertId
         })
         return insertId
+    }
+
+    function deleteVideo(id) {
+        db.transaction(function(tx) {
+            tx.executeSql('DELETE FROM Videos WHERE id=?', [id])
+        })
     }
 
     function getLibPaths() {

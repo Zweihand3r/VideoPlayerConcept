@@ -78,6 +78,10 @@ View {
         pathsModel.append({ "_path": path, "_dirFlag": dirFlag })
     }
 
+    function clearLibPaths() {
+        pathsModel.clear()
+    }
+
 
     /* --------------------------------------------- */
 
